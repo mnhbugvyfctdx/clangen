@@ -902,6 +902,800 @@
         ]
     },
     {
+        "patrol_id": "bord_stealkits1",
+        "biome": ["Any"],
+        "season": ["Any"],
+        "types": ["border"],
+        "tags": ["other_clan", "new_cat"],
+        "patrol_art": "bord_general_intro",
+        "min_cats": 2,
+        "max_cats": 6,
+        "min_max_status": {
+            "normal adult": [2, 6]
+        },
+        "weight": 20,
+        "intro_text": "p_l sees two kits from o_c_n playing close to the border. Maybe this would be a good chance to... grow the clan, while weakening o_c_n, let's say.",
+        "decline_text": "It's not {PRONOUN/p_l/poss} problem.",
+        "chance_of_success": 55,
+        "success_outcomes": [
+            {
+                "text": "p_l orders r_c to grab the kits, and when the patrol returns to camp, p_l spins a story about how they all found abandoned kits on the patrol. While their clanmates are suspicious, they let the kits stay.",
+                "exp": 20,
+                "weight": 20,
+                "new_cat": [
+                    ["litter", "age:kitten", "backstory:otherclan_stolen"]
+                ],
+                "relationships": [
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["patrol"],
+                        "mutual": true,
+                        "values": ["respect", "trust"],
+                        "amount": 5
+                    }
+                ],
+                "other_clan_rep": -5
+            },
+            {
+                "text": "r_c harshly grabs the kits, telling p_l to do the same- who is suprised to be ordered around on a patrol <i>{PRONOUN/p_l/subject}{VERB/p_l/'re/s}</i> leading- and carry them back to camp as they shift and cry in r_c's grip.",
+                "exp": 20,
+                "weight": 25,
+                "stat_trait": ["bloodthirsty", "vengeful", "cold", "strict", "ambitious", "arrogant", "troublesome"],
+                "can_have_stat": ["r_c"],
+                "new_cat": [
+                    ["litter", "age:kitten", "backstory:otherclan_stolen"]
+                ],
+                "relationships": [],
+                "other_clan_rep": -6
+            },
+            {
+                "text": "r_c softly asks if the kits want to get out of the <i>harsh</i> weather and come to the c_n camp. The kits debate for a moment, before one admits that they're cold, and they all hesitantly agree.",
+                "exp": 20,
+                "weight": 25,
+                "stat_skill": ["SPEAKER,1", "MEDIATOR,1"],
+                "can_have_stat": ["r_c"],
+                "new_cat": [
+                    ["litter", "age:kitten", "backstory:otherclan_stolen"]
+                ],
+                "relationships": [
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["patrol"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": 10
+                    }
+                ],
+                "other_clan_rep": -4
+            },
+            {
+                "text": "As p_l approaches the kits, an apprentice jumps out at the patrol and hisses at them to back off. p_l orders r_c to hold off the apprentice and grabs the kits anyways, heading back to camp with a mouthful of stolen kits and a lightly-clawed r_c.",
+                "exp": 20,
+                "weight": 5,
+                "injury": [
+                    {
+                        "cats": ["r_c"],
+                        "injuries": ["claw-wound"],
+                        "scars": ["ONE"]
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred by an apprentice from o_c_n when stealing kits."
+                },
+                "new_cat": [
+                    ["litter", "age:kitten", "backstory:otherclan_stolen"]
+                ],
+                "relationships": [
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["patrol"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": 10
+                    }
+                ],
+                "other_clan_rep": -7
+            }
+        ],
+        "fail_outcomes": [
+            {
+                "text": "As p_l turns back towards c_n camp with r_c, kits held by their scruffs, a o_c_n patrol suddenly appears, looking furious, with their claws out and fangs bared! r_c drops the kits and attempts to spin a story, but is immediately and viciously killed. p_l races back over to their side of the border, just barely escaping the wrath of the o_c_n warriors.",
+                "exp": 0,
+                "weight": 10,
+                "dead_cats": ["r_c"],
+                "history_text": {
+                    "reg_death": "m_c was slain by o_c_n warriors when trying to steal kits.",
+                    "lead_death": "were slain by o_c_n warriors when stealing kits"
+                },
+                "relationships": [
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["patrol"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": -10
+                    }
+                ],
+                "other_clan_rep": -2
+            },
+            {
+                "text": "p_l barely has a chance to order r_c to grab the kits before being jumped on by o_c_n warriors! p_l and the rest of the patrol manage to fight them off with little injury, but they didn't end up grabbing the kits and were chased off.",
+                "exp": 0,
+                "weight": 20,
+                "relationships": [
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["patrol"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": -10
+                    }
+                ],
+                "other_clan_rep": -1
+            }
+        ],
+        "antag_fail_outcomes": [
+            {
+                "text": "p_l and the patrol cross the border to attack the two kits when they are thwarted by an o_c_n patrol that was looking for the kits. Fox-dung, a good opportunity to weaken o_c_n has failed.",
+                "exp": 0,
+                "weight": 20,
+                "other_clan_rep": -1
+            }
+        ],
+        "antag_success_outcomes": [
+            {
+                "text": "p_l seizes the opportunity to weaken o_c_n and orders the patrol to attack and kill the kits.",
+                "exp": 20,
+                "weight": 20,
+                "other_clan_rep": -3
+            }
+        ]
+    },
+    {
+        "patrol_id": "bord_stealkits2",
+        "biome": ["Any"],
+        "season": ["Any"],
+        "types": ["border"],
+        "tags": ["other_clan", "new_cat"],
+        "patrol_art": "bord_general_intro",
+        "min_cats": 1,
+        "max_cats": 1,
+        "min_max_status": {
+            "normal adult": [1, 1]
+        },
+        "weight": 20,
+        "intro_text": "p_l sees two kits from o_c_n playing close to the border. Maybe this would be a good chance to... grow the clan, while weakening o_c_n, let's say.",
+        "decline_text": "It's not {PRONOUN/p_l/poss} problem.",
+        "chance_of_success": 55,
+        "success_outcomes": [
+            {
+                "text": "p_l grabs the kits, and when the patrol returns to camp, p_l spins a story about how {PRONOUN/p_l/subject} found a litter of abandoned kits on the patrol. While {PRONOUN/p_l/poss} leader is suspicious, they let the kits stay.",
+                "exp": 20,
+                "weight": 20,
+                "new_cat": [
+                    ["litter", "age:kitten", "backstory:otherclan_stolen"]
+                ],
+                "relationships": [],
+                "other_clan_rep": -5
+            },
+            {
+                "text": "r_c harshly grabs the kits, telling p_l to do the same- who is suprised to be ordered around on a patrol <i>{PRONOUN/p_l/subject}{VERB/p_l/'re/s}</i> leading- and carries them back to camp as they shift and cry in r_c's grip.",
+                "exp": 20,
+                "weight": 25,
+                "stat_trait": ["bloodthirsty", "vengeful", "cold", "strict", "ambitious", "arrogant", "troublesome"],
+                "can_have_stat": ["r_c"],
+                "new_cat": [
+                    ["litter", "age:kitten", "backstory:otherclan_stolen"]
+                ],
+                "relationships": [],
+                "other_clan_rep": -6
+            },
+            {
+                "text": "As p_l approaches the kits, an apprentice jumps out at the patrol and hisses at {PRONOUN/p_l/object} to back off. p_l manages to drive off the apprentice and grabs the kits anyways, heading back to camp with a mouthful of stolen kits and a claw-wound.",
+                "exp": 20,
+                "weight": 5,
+                "injury": [
+                    {
+                        "cats": ["p_l"],
+                        "injuries": ["claw-wound"],
+                        "scars": ["ONE"]
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred by an apprentice from o_c_n when stealing kits."
+                },
+                "new_cat": [
+                    ["litter", "age:kitten", "backstory:otherclan_stolen"]
+                ],
+                "relationships": [
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["patrol"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": 10
+                    }
+                ],
+                "other_clan_rep": -7
+            }
+        ],
+        "fail_outcomes": [
+            {
+                "text": "As p_l turns back towards c_n camp, kits held by their scruffs, a o_c_n patrol suddenly appears, looking furious, with their claws out and fangs bared! p_l drops the kits and attempts to spin a story, but is immediately and viciously killed.",
+                "exp": 0,
+                "weight": 10,
+                "dead_cats": ["p_l"],
+                "history_text": {
+                    "reg_death": "m_c was slain by o_c_n warriors when trying to steal kits.",
+                    "lead_death": "were slain by o_c_n warriors when stealing kits"
+                },
+                "relationships": [],
+                "other_clan_rep": -2
+            },
+            {
+                "text": "p_l barely has a chance to order r_c to grab the kits before being jumped on by o_c_n warriors! p_l manages to fight them off with little injury, but {PRONOUN/p_l/subject} didn't end up grabbing the kits and were chased off.",
+                "exp": 0,
+                "weight": 20,
+                "relationships": [],
+                "other_clan_rep": -1
+            }
+        ],
+        "antag_fail_outcomes": [
+            {
+                "text": "p_l crosses the border to attack the two kits when {PRONOUN/p_l/subject} {VERB/p_l/are/is} thwarted by an o_c_n patrol that was looking for the kits. Fox-dung, a good opportunity to weaken o_c_n has failed.",
+                "exp": 0,
+                "weight": 20,
+                "other_clan_rep": -1
+            }
+        ],
+        "antag_success_outcomes": [
+            {
+                "text": "p_l seizes the opportunity to weaken o_c_n and attacks and kills the kits.",
+                "exp": 20,
+                "weight": 20,
+                "other_clan_rep": -3
+            }
+        ]
+    },
+    {
+        "patrol_id": "bord_stealkits_app2",
+        "biome": ["Any"],
+        "season": ["Any"],
+        "types": ["border"],
+        "tags": ["other_clan", "new_cat"],
+        "patrol_art": "bord_general_intro",
+        "min_cats": 1,
+        "max_cats": 1,
+        "min_max_status": {
+            "apprentice": [1, 1]
+        },
+        "weight": 20,
+        "intro_text": "p_l spots some kits from o_c_n playing close to the border. Maybe, if {PRONOUN/p_l/subject} stole them, p_l would get a full name?",
+        "decline_text": "p_l talks {PRONOUN/p_l/subject}self out of this crazy idea.",
+        "chance_of_success": 55,
+        "success_outcomes": [
+            {
+                "text": "p_l approaches the kits, calling out to them. They turn to look at p_l, eyes wide, before p_l promptly scoops them up. When they get back to the camp, their leader doesn't seem... the <i>most</i> proud of p_l, but the kits are allowed to stay regardless.",
+                "exp": 20,
+                "weight": 20,
+                "new_cat": [
+                    ["litter", "age:kitten", "backstory:otherclan_stolen"]
+                ],
+                "relationships": [
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["patrol"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": 5
+                    },
+                    {
+                        "cats_to": ["p_l"],
+                        "cats_from": ["clan"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": -3
+                    }
+                ],
+                "other_clan_rep": -5
+            },
+            {
+                "text": "p_l grabs the kits sucessfully.",
+                "exp": 20,
+                "weight": 20,
+                "new_cat": [
+                    ["litter", "age:kitten", "backstory:otherclan_stolen"]
+                ],
+                "relationships": [],
+                "other_clan_rep": -4
+            }
+        ],
+        "fail_outcomes": [
+            {
+                "text": "p_l grabs the kits sucessfully, but when {PRONOUN/p_l/subject} {VERB/p_l/get/gets} back to camp, c_n's leader yells at {PRONOUN/p_l/object}, telling {PRONOUN/p_l/object} to return the kits <i>immediately</i>.",
+                "exp": 0,
+                "weight": 20,
+                "relationships": [
+                    {
+                        "cats_to": ["p_l"],
+                        "cats_from": ["clan"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": -15
+                    },
+                    {
+                        "cats_to": ["p_l"],
+                        "cats_from": ["clan"],
+                        "mutual": false,
+                        "values": ["dislike"],
+                        "amount": 5
+                    }
+                ],
+                "other_clan_rep": -3
+            },
+            {
+                "text": "When p_l returns to c_n's camp with the kits in tow, the leader suprises {PRONOUN/p_l/object} by not being proud- instead, they bite p_l harshly, and tell {PRONOUN/p_l/object} to go return the kits. Now.",
+                "exp": 0,
+                "weight": 10,
+                "injury": [
+                    {
+                        "cats": ["p_l"],
+                        "injuries": ["cat bite"],
+                        "scars": ["ONE"]
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred by their leader when they tried to steal o_c_n's kits.",
+                    "reg_death": "This cat died from being punished for trying to steal o_c_n's kits.",
+                    "lead_death": "died from being punished for stealing kits"
+                },
+                "relationships": [
+                    {
+                        "cats_to": ["p_l"],
+                        "cats_from": ["clan"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": -18
+                    },
+                    {
+                        "cats_to": ["p_l"],
+                        "cats_from": ["clan"],
+                        "mutual": false,
+                        "values": ["dislike"],
+                        "amount": 10
+                    }
+                ],
+                "other_clan_rep": -2
+            }
+        ],
+        "antag_fail_outcomes": [
+            {
+                "text": "p_l crosses the border to attack the two kits when {PRONOUN/p_l/subject} {VERB/p_l/are/is} thwarted by an o_c_n patrol that was looking for the kits. Fox-dung, a good opportunity to weaken o_c_n has failed.",
+                "exp": 0,
+                "weight": 20,
+                "other_clan_rep": -1
+            }
+        ],
+        "antag_success_outcomes": [
+            {
+                "text": "p_l seizes the opportunity to weaken o_c_n and attacks and kills the kits.",
+                "exp": 20,
+                "weight": 20,
+                "other_clan_rep": -3
+            }
+        ]
+    },
+    {
+        "patrol_id": "bord_stealkits_app1",
+        "biome": ["Any"],
+        "season": ["Any"],
+        "types": ["border"],
+        "tags": ["other_clan", "new_cat"],
+        "patrol_art": "bord_general_intro",
+        "min_cats": 2,
+        "max_cats": 6,
+        "min_max_status": {
+            "apprentice": [2, 6]
+        },
+        "weight": 20,
+        "intro_text": "p_l spots some kits from o_c_n playing close to the border. Maybe, if {PRONOUN/p_l/subject} had {PRONOUN/p_l/poss} patrol steal them, p_l would get a full name?",
+        "decline_text": "The other apprentices talk p_l out of this crazy idea.",
+        "chance_of_success": 55,
+        "success_outcomes": [
+            {
+                "text": "p_l approaches the kits, calling out to them. They turn to look at p_l, eyes wide, before p_l promptly scoops them up and orders {PRONOUN/p_l/poss} patrol to do the same. When they get back to the camp, their leader doesn't seem... the <i>most</i> proud of p_l, but the kits are allowed to stay regardless.",
+                "exp": 20,
+                "weight": 20,
+                "new_cat": [
+                    ["litter", "age:kitten", "backstory:otherclan_stolen"]
+                ],
+                "relationships": [
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["patrol"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": 5
+                    },
+                    {
+                        "cats_to": ["p_l"],
+                        "cats_from": ["clan"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": -3
+                    }
+                ],
+                "other_clan_rep": -5
+            },
+            {
+                "text": "p_l grabs the kits sucessfully.",
+                "exp": 20,
+                "weight": 20,
+                "new_cat": [
+                    ["litter", "age:kitten", "backstory:otherclan_stolen"]
+                ],
+                "relationships": [],
+                "other_clan_rep": -4
+            }
+        ],
+        "fail_outcomes": [
+            {
+                "text": "p_l grabs the kits sucessfully, but when {PRONOUN/p_l/subject} {VERB/p_l/get/gets} back to camp, c_n's leader yells at {PRONOUN/p_l/object}, telling {PRONOUN/p_l/object} to return the kits <i>immediately</i>.",
+                "exp": 0,
+                "weight": 20,
+                "relationships": [
+                    {
+                        "cats_to": ["p_l"],
+                        "cats_from": ["clan"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": -15
+                    },
+                    {
+                        "cats_to": ["p_l"],
+                        "cats_from": ["clan"],
+                        "mutual": false,
+                        "values": ["dislike"],
+                        "amount": 5
+                    }
+                ],
+                "other_clan_rep": -3
+            },
+            {
+                "text": "When p_l returns to c_n's camp with the kits in tow, the leader suprises {PRONOUN/p_l/object} by not being proud- instead, they bite p_l harshly, and tell {PRONOUN/p_l/object} to go return the kits. Now.",
+                "exp": 0,
+                "weight": 10,
+                "injury": [
+                    {
+                        "cats": ["p_l"],
+                        "injuries": ["cat bite"],
+                        "scars": ["ONE"]
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred by their leader when they tried to steal o_c_n's kits.",
+                    "reg_death": "This cat died from being punished for trying to steal o_c_n's kits.",
+                    "lead_death": "died from being punished for stealing kits"
+                },
+                "relationships": [
+                    {
+                        "cats_to": ["p_l"],
+                        "cats_from": ["clan"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": -18
+                    },
+                    {
+                        "cats_to": ["p_l"],
+                        "cats_from": ["clan"],
+                        "mutual": false,
+                        "values": ["dislike"],
+                        "amount": 10
+                    }
+                ],
+                "other_clan_rep": -2
+            }
+        ],
+        "antag_fail_outcomes": [
+            {
+                "text": "p_l crosses the border to attack the two kits when {PRONOUN/p_l/subject} {VERB/p_l/are/is} thwarted by an o_c_n patrol that was looking for the kits. Fox-dung, a good opportunity to weaken o_c_n has failed.",
+                "exp": 0,
+                "weight": 20,
+                "other_clan_rep": -1
+            }
+        ],
+        "antag_success_outcomes": [
+            {
+                "text": "p_l seizes the opportunity to weaken o_c_n and attacks and kills the kits.",
+                "exp": 20,
+                "weight": 20,
+                "other_clan_rep": -3
+            }
+        ]
+    },
+    {
+        "patrol_id": "bord_stealapp1",
+        "biome": ["Any"],
+        "season": ["Any"],
+        "types": ["border"],
+        "tags": ["other_clan", "new_cat"],
+        "patrol_art": "bord_otherclan_app",
+        "min_cats": 2,
+        "max_cats": 6,
+        "min_max_status": {
+            "normal adult": [2, 6]
+        },
+        "weight": 20000,
+        "intro_text": "p_l spots an apprentice from o_c_n wandering alone a bit close to the border. Maybe this would be a good chance to... grow the clan, while weakening o_c_n, let's say.",
+        "decline_text": "It's not {PRONOUN/p_l/poss} problem.",
+        "chance_of_success": 55,
+        "success_outcomes": [
+            {
+                "text": "p_l orders r_c and the rest of the patrol to grab the apprentice, threatening the apprentice to not say a word to the leader, and when the patrol returns to camp, p_l spins a story about how they all found the poor young cat alone while on patrol. While their clanmates are suspicious, they let the apprentice stay.",
+                "exp": 20,
+                "weight": 20,
+                "new_cat": [
+                    ["age:adolescent", "backstory:otherclan_stolen"]
+                ],
+                "relationships": [
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["patrol"],
+                        "mutual": true,
+                        "values": ["respect", "trust"],
+                        "amount": 5
+                    },
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["n_c:0"],
+                        "mutual": false,
+                        "values": ["respect", "trust", "like"],
+                        "amount": -100
+                    },
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["n_c:0"],
+                        "mutual": false,
+                        "values": ["dislike"],
+                        "amount": 15
+                    }
+                ],
+                "other_clan_rep": -5
+            },
+            {
+                "text": "r_c harshly grabs the apprentice, telling p_l- who is suprised to be ordered around on a patrol <i>{PRONOUN/p_l/subject}{VERB/p_l/'re/s}</i> leading- to claw them up a bit, make sure they don't tell and carry them back to camp as they're oddly quiet in r_c's grip.",
+                "exp": 20,
+                "weight": 25,
+                "stat_trait": ["bloodthirsty", "vengeful", "cold", "strict", "ambitious", "arrogant", "troublesome"],
+                "can_have_stat": ["r_c"],
+                "new_cat": [
+                    ["age:adolescent", "backstory:otherclan_stolen"]
+                ],
+                "injury": [
+                    {
+                        "cats": ["n_c:0"],
+                        "injuries": ["claw-wound"],
+                        "scars": ["ONE"]
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["n_c:0"],
+                        "mutual": false,
+                        "values": ["respect", "trust", "like"],
+                        "amount": -100
+                    },
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["n_c:0"],
+                        "mutual": false,
+                        "values": ["dislike"],
+                        "amount": 30
+                    }
+                ],
+                "other_clan_rep": -6
+            },
+            {
+                "text": "r_c approaches the apprentice, asking what they were doing so close to c_n territory. They falter for a second before admitting they had a c_n friend they wanted to visit. r_c offers a place in the Clan to them, and they hesitantly accept.",
+                "exp": 20,
+                "weight": 25,
+                "stat_skill": ["SPEAKER,1", "MEDIATOR,1"],
+                "can_have_stat": ["r_c"],
+                "new_cat": [
+                    ["status:apprentice", "backstory:otherclan1"]
+                ],
+                "relationships": [
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["patrol"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": 10
+                    }
+                ],
+                "other_clan_rep": -4
+            }
+        ],
+        "fail_outcomes": [
+            {
+                "text": "As p_l approaches the apprentice, a o_c_n patrol suddenly appears, looking furious, with their claws out and fangs bared! r_c backs away and attempts to spin a story, but is immediately and viciously killed. p_l races back over to their side of the border, just barely escaping the wrath of the o_c_n warriors.",
+                "exp": 0,
+                "weight": 10,
+                "dead_cats": ["r_c"],
+                "history_text": {
+                    "reg_death": "m_c was slain by o_c_n warriors when trying to steal an apprentice.",
+                    "lead_death": "were slain by o_c_n warriors when stealing an apprentice"
+                },
+                "relationships": [
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["patrol"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": -10
+                    }
+                ],
+                "other_clan_rep": -2
+            },
+            {
+                "text": "p_l barely has a chance to order r_c to grab the apprentice before being jumped on by o_c_n warriors! p_l and the rest of the patrol manage to fight them off with little injury, but they didn't end up grabbing the apprentice and were chased off.",
+                "exp": 0,
+                "weight": 20,
+                "relationships": [
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["patrol"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": -10
+                    }
+                ],
+                "other_clan_rep": -1
+            }
+        ],
+        "antag_fail_outcomes": [
+            {
+                "text": "p_l and the patrol cross the border to attack the apprentice when they are thwarted by an o_c_n patrol that was looking for the apprentice. Fox-dung, a good opportunity to weaken o_c_n has failed.",
+                "exp": 0,
+                "weight": 20,
+                "other_clan_rep": -1
+            }
+        ],
+        "antag_success_outcomes": [
+            {
+                "text": "p_l seizes the opportunity to weaken o_c_n and orders the patrol to attack and kill the apprentice.",
+                "exp": 20,
+                "weight": 20,
+                "other_clan_rep": -3
+            }
+        ]
+    },
+    {
+        "patrol_id": "bord_stealapp2",
+        "biome": ["Any"],
+        "season": ["Any"],
+        "types": ["border"],
+        "tags": ["other_clan", "new_cat"],
+        "patrol_art": "bord_otherclan_app",
+        "min_cats": 2,
+        "max_cats": 6,
+        "min_max_status": {
+            "normal adult": [2, 6]
+        },
+        "weight": 20,
+        "intro_text": "p_l spots an apprentice from o_c_n wandering alone a bit close to the border. Maybe this would be a good chance to... grow the clan, while weakening o_c_n, let's say.",
+        "decline_text": "It's not {PRONOUN/p_l/poss} problem.",
+        "chance_of_success": 55,
+        "success_outcomes": [
+            {
+                "text": "p_l grabs the apprentice, threatening them to not say a word to the leader, and when the patrol returns to camp, p_l spins a story about how {PRONOUN/p_l/subject} found the poor young cat alone while on patrol. While {PRONOUN/p_l/poss} leader is suspicious, they let the apprentice stay.",
+                "exp": 20,
+                "weight": 20,
+                "new_cat": [
+                    ["age:adolescent", "backstory:otherclan_stolen"]
+                ],
+                "relationships": [
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["patrol"],
+                        "mutual": true,
+                        "values": ["respect", "trust"],
+                        "amount": 5
+                    },
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["n_c:0"],
+                        "mutual": false,
+                        "values": ["respect", "trust", "like"],
+                        "amount": -100
+                    },
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["n_c:0"],
+                        "mutual": false,
+                        "values": ["dislike"],
+                        "amount": 15
+                    }
+                ],
+                "other_clan_rep": -5
+            },
+            {
+                "text": "p_l approaches the apprentice, asking what they were doing so close to c_n territory. They falter for a second before admitting they had a c_n friend they wanted to visit. p_l offers a place in the Clan to them, and they hesitantly accept.",
+                "exp": 20,
+                "weight": 25,
+                "stat_skill": ["SPEAKER,1", "MEDIATOR,1"],
+                "can_have_stat": ["p_l"],
+                "new_cat": [
+                    ["age:adolescent", "backstory:otherclan_stolen"]
+                ],
+                "relationships": [
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["patrol"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": 10
+                    }
+                ],
+                "other_clan_rep": -4
+            }
+        ],
+        "fail_outcomes": [
+            {
+                "text": "As p_l approaches the apprentice, a o_c_n patrol suddenly appears, looking furious, with their claws out and fangs bared! p_l backs away and attempts to spin a story, but is immediately and viciously killed.",
+                "exp": 0,
+                "weight": 10,
+                "dead_cats": ["p_l"],
+                "history_text": {
+                    "reg_death": "m_c was slain by o_c_n warriors when trying to steal an apprentice.",
+                    "lead_death": "were slain by o_c_n warriors when stealing an apprentice"
+                },
+                "relationships": [
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["patrol"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": -10
+                    }
+                ],
+                "other_clan_rep": -2
+            },
+            {
+                "text": "p_l barely has a chance to move to grab the apprentice before being jumped on by o_c_n warriors! p_l manages to fight them off with little injury, but {PRONOUN/p_l/subject} didn't end up grabbing the apprentice and were chased off.",
+                "exp": 0,
+                "weight": 20,
+                "relationships": [
+                    {
+                        "cats_to": ["patrol"],
+                        "cats_from": ["patrol"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": -10
+                    }
+                ],
+                "other_clan_rep": -1
+            }
+        ],
+        "antag_fail_outcomes": [
+            {
+                "text": "p_l and the patrol cross the border to attack the apprentice when they are thwarted by an o_c_n patrol that was looking for the apprentice. Fox-dung, a good opportunity to weaken o_c_n has failed.",
+                "exp": 0,
+                "weight": 20,
+                "other_clan_rep": -1
+            }
+        ],
+        "antag_success_outcomes": [
+            {
+                "text": "p_l seizes the opportunity to weaken o_c_n and attacks and kills the apprentice.",
+                "exp": 20,
+                "weight": 20,
+                "other_clan_rep": -3
+            }
+        ]
+    },
+    {
         "patrol_id": "gen_border_otherclan_badger1",
         "biome": ["Any"],
         "season": ["Any"],

@@ -111,7 +111,7 @@
         ],
         "main_backstory_constraint": [
             "clan_founder", "clanborn", "halfclan1", "halfclan2", "outsider_roots1", "outsider_roots2","loner1", "loner2", "rogue1", "rogue2", "rogue3", "abandoned1", "abandoned2", "abandoned3", "abandoned4",
-            "otherclan1", "otherclan2", "otherclan3", "otherclan4","disgraced1", "disgraced2", "disgraced3", "retired_leader", "medicine_cat", "ostracized_warrior", "refugee1", "refugee2", "refugee4", "refugee5",
+            "otherclan1", "otherclan2", "otherclan3", "otherclan4","otherclan_stolen","disgraced1", "disgraced2", "disgraced3", "retired_leader", "medicine_cat", "ostracized_warrior", "refugee1", "refugee2", "refugee4", "refugee5",
             "tragedy_survivor1", "tragedy_survivor2", "tragedy_survivor4","wandering_healer1", "wandering_healer2", "guided2", "guided3", "guided4", "orphaned1", "orphaned2", "orphaned3", "orphaned4", "orphaned5", "orphaned6"
         ]
     },
@@ -563,12 +563,34 @@
             "leader",
             "elder"
         ],
-        "main_backstory_constraint": ["otherclan1", "otherclan2", "otherclan3", "otherclan4"]
+        "main_backstory_constraint": ["otherclan1", "otherclan2", "otherclan3", "otherclan4", "otherclan_stolen"]
+    },
+    {
+        "id": "gen_stolen",
+        "thoughts": [
+            "Wishes {PRONOUN/m_c/subject} were still in {PRONOUN/m_c/poss} birth Clan",
+            "Thinks about running away",
+            "Wants to go back to {PRONOUN/m_c/poss} birth Clan",
+            "Wonders how {PRONOUN/m_c/poss} life would've been if {PRONOUN/m_c/subject} hadn't been taken"
+        ],
+        "main_status_constraint": [
+            "apprentice",
+            "medicine cat apprentice",
+            "mediator apprentice",
+            "warrior",
+            "medicine cat",
+            "mediator",
+            "deputy",
+            "leader",
+            "elder"
+        ],
+        "main_backstory_constraint": ["otherclan_stolen"]
     },
     {
         "id": "gen_wandering_healer",
         "thoughts": [
-            "Is wondering how the cats {PRONOUN/m_c/subject} helped in the past are doing"
+            "Is wondering how the cats {PRONOUN/m_c/subject} helped in the past are doing",
+            "Misses the life of being a wandering healer"
         ],
         "main_status_constraint": [
             "apprentice",
@@ -693,7 +715,7 @@
             "Isn't ashamed of {PRONOUN/m_c/poss} past",
             "Isn't living with a paw in each world"
         ],
-        "main_backstory_constraint": ["kittypet1", "kittypet2", "kittypet3", "kittypet4", "refugee3", "tragedy_survivor3", "guided1"]
+        "main_backstory_constraint": ["kittypet1", "kittypet2", "kittypet3", "kittypet4", "kittypet5", "kittypet6", "refugee3", "tragedy_survivor3", "guided1"]
     },
     {
         "id": "gen_former_kittypet_apprentice",
@@ -705,7 +727,7 @@
             "Wants to play with {PRONOUN/r_c/poss} old kittypet toys",
             "Avoids the Twoleg place to prove {PRONOUN/m_c/poss} loyalty"
         ],
-        "main_backstory_constraint": ["kittypet1", "kittypet2", "kittypet3", "kittypet4", "refugee3", "tragedy_survivor3", "guided1"],
+        "main_backstory_constraint": ["kittypet1", "kittypet2", "kittypet3", "kittypet4", "kittypet5", "kittypet6", "refugee3", "tragedy_survivor3", "guided1"],
         "main_status_constraint": ["apprentice"]
     },
     {
@@ -719,7 +741,7 @@
             "Is jealous of how well r_c fits in, just because of {PRONOUN/r_c/poss} Clan roots",
             "Patiently answers r_c's slightly rude questions about kittypet life"
         ],
-        "main_backstory_constraint": ["kittypet1", "kittypet2", "kittypet3", "kittypet4", "refugee3", "tragedy_survivor3", "guided1"],
+        "main_backstory_constraint": ["kittypet1", "kittypet2", "kittypet3", "kittypet4", "kittypet5", "kittypet6", "refugee3", "tragedy_survivor3", "guided1"],
         "main_status_constraint": ["apprentice"],
         "random_status_constraint": ["apprentice"],
         "random_backstory_constraint": ["clanborn"]
@@ -733,7 +755,7 @@
             "Knows a great garden in the Twoleg place for gathering catmint",
             "Wishes {PRONOUN/m_c/subject} could get {PRONOUN/m_c/poss} paws on the wrappings the vet uses"
         ],
-        "main_backstory_constraint": ["kittypet1", "kittypet2", "kittypet3", "kittypet4", "refugee3", "tragedy_survivor3", "guided1"],
+        "main_backstory_constraint": ["kittypet1", "kittypet2", "kittypet3", "kittypet4", "kittypet5", "kittypet6", "refugee3", "tragedy_survivor3", "guided1"],
         "main_status_constraint": [
             "medicine cat"]
     },
@@ -746,7 +768,7 @@
             "Wishes other cats would trust in the leader's choice of making {PRONOUN/m_c/object} deputy",
             "Wouldn't mind bragging about {PRONOUN/m_c/poss} position in the Clan to some old kittypet friends"
         ],
-        "main_backstory_constraint": ["kittypet1", "kittypet2", "kittypet3", "kittypet4", "refugee3", "tragedy_survivor3", "guided1"],
+        "main_backstory_constraint": ["kittypet1", "kittypet2", "kittypet3", "kittypet4", "kittypet5", "kittypet6", "refugee3", "tragedy_survivor3", "guided1"],
         "main_status_constraint": [
             "deputy"]
     },
@@ -760,7 +782,7 @@
             "Looks back on {PRONOUN/m_c/poss} life as a kittypet, amazed at how different things are now",
             "Thinks about taking in some kittypets as apprentices"
         ],
-        "main_backstory_constraint": ["kittypet1", "kittypet2", "kittypet3", "kittypet4", "refugee3", "tragedy_survivor3", "guided1"],
+        "main_backstory_constraint": ["kittypet1", "kittypet2", "kittypet3", "kittypet4", "kittypet5", "kittypet6", "refugee3", "tragedy_survivor3", "guided1"],
         "main_status_constraint": [
             "leader"]
     },

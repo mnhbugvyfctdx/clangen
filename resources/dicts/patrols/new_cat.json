@@ -597,12 +597,12 @@
         ]
     },
     {
-        "patrol_id": "gen_bord_binglegift1",
+        "patrol_id": "gen_bord_outsidemate1",
         "biome": ["Any"],
         "season": ["Any"],
         "types": ["border"],
         "tags": ["new_cat"],
-        "patrol_art": "bord_general_intro",
+        "patrol_art": "gen_outsidemate",
         "min_cats": 1,
         "max_cats": 1,
         "min_max_status": {
@@ -618,14 +618,14 @@
                 "exp": 10,
                 "weight": 20,
                 "new_cat": [
-                    ["age:adult", "meeting", "backstory:loner3"]
+                    ["age:adult", "meeting", "mate:p_l", "backstory:loner3"]
                 ],
                 "relationships": [
                     {
                         "cats_from": ["n_c:0"],
                         "cats_to": ["p_l"],
                         "mutual": true,
-                        "values": ["platonic", "trust", "comfort"],
+                        "values": ["platonic", "trust", "comfort", "romantic"],
                         "amount": 30
                     }
                 ],
@@ -819,6 +819,279 @@
                     }
                 ],
                 "outsider_rep": -2
+            }
+        ]
+    },
+    {
+        "patrol_id": "gen_bord_outsidemate2",
+        "biome": ["Any"],
+        "season": ["Any"],
+        "types": ["border"],
+        "tags": ["new_cat"],
+        "patrol_art": "gen_outsidemate",
+        "min_cats": 1,
+        "max_cats": 1,
+        "min_max_status": {
+            "normal adult": [1, 6]
+        },
+        "weight": 2000000000,
+        "intro_text": "p_l crosses out of the territory, warily looking behind {PRONOUN/p_l/object}self before turning to head towards a twolegplace.",
+        "decline_text": "p_l thinks better of {PRONOUN/p_l/poss} risky adventure, and retreats back to known territory.",
+        "chance_of_success": 40,
+        "success_outcomes": [
+            {
+                "text": "There's no guarentee that {PRONOUN/n_c:0/subject} still {VERB/n_c:0/live/lives} with the same twolegs - but p_l jumps over the fence and into the garden regardless, and is ecstatic to find n_c:0 waiting for {PRONOUN/m_c/object} there. Maybe {PRONOUN/m_c/poss} little crush isn't requited - but {PRONOUN/m_c/subject} still {VERB/m_c/feel/feels} a warmth rush down {PRONOUN/m_c/poss} spine as n_c:0 runs up and touches noses with {PRONOUN/m_c/object} regardless.",
+                "exp": 10,
+                "weight": 20,
+                "new_cat": [
+                    ["age:mate", "kittypet", "meeting", "backstory:kittypet5"]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": false,
+                        "values": ["trust", "comfort"],
+                        "amount": 20
+                    },
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": false,
+                        "values": ["platonic"],
+                        "amount": 35
+                    },
+                    {
+                        "cats_from": ["p_l"],
+                        "cats_to": ["n_c:0"],
+                        "mutual": false,
+                        "values": ["trust", "comfort"],
+                        "amount": 30
+                    },
+                    {
+                        "cats_from": ["p_l"],
+                        "cats_to": ["n_c:0"],
+                        "mutual": false,
+                        "values": ["platonic", "romantic"],
+                        "amount": 50
+                    }
+                ],
+                "outsider_rep": 1
+            },
+            {
+                "text": "p_l sneaks into a certain twoleg den, calling out. Soon enough, {PRONOUN/p_l/poss} calls are answered, and p_l smiles softly as n_c:0 rubs against {PRONOUN/p_l/object}. {PRONOUN/p_l/subject} know this can't last forever - n_c:0 hates the idea of leaving and joining c_n, after all - but p_l will enjoy this happiness while it's still here.",
+                "exp": 10,
+                "weight": 20,
+                "new_cat": [
+                    ["age:mate", "meeting", "kittypet", "mate:p_l", "backstory:kittypet5"]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": true,
+                        "values": ["trust", "comfort"],
+                        "amount": 30
+                    },
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": true,
+                        "values": ["platonic", "romantic"],
+                        "amount": 50
+                    }
+                ],
+                "outsider_rep": 1
+            },
+            {
+                "text": "unfinished. p_l has mate now, congrats.",
+                "exp": 10,
+                "weight": 20,
+                "new_cat": [
+                    ["age:mate", "meeting", "kittypet", "mate:p_l", "backstory:kittypet5"]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": true,
+                        "values": ["trust", "comfort"],
+                        "amount": 30
+                    },
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": true,
+                        "values": ["platonic", "romantic"],
+                        "amount": 50
+                    }
+                ],
+                "outsider_rep": 1
+            },
+            {
+                "text": "p_l practically bursts into the twoleg den, ready with {PRONOUN/p_l/poss} <i>new</i> new spiel about why n_c:0 should join {PRONOUN/p_l/object} in c_n and be {PRONOUN/p_l/poss} official mate. n_c:0 laughs softly, cutting p_l off mid-sentence with a statement of <i>fine</i>, {PRONOUN/n_c:0/subject}'d join p_l in c_n - though when p_l returns to camp, tails entwined with n_c:0 and announcing that {PRONOUN/n_c:0/subject} {VERB/n_c:0/want/wants} to join, they can both feel the newly-distrusting stares from their clanmates.",
+                "exp": 10,
+                "weight": 20,
+                "new_cat": [
+                    ["age:mate", "mate:p_l", "backstory:kittypet6"]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": true,
+                        "values": ["trust", "comfort"],
+                        "amount": 30
+                    },
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": true,
+                        "values": ["platonic", "romantic"],
+                        "amount": 50
+                    },
+                    {
+                        "cats_from": ["clan"],
+                        "cats_to": ["p_l"],
+                        "mutual": false,
+                        "values": ["respect", "trust"],
+                        "amount": -20
+                    }
+                ],
+                "outsider_rep": 1
+            },
+            {
+                "text": "As p_l softly pushes {PRONOUN/p_l/poss} way into the twoleg den's cat door, {PRONOUN/p_l/subject} {VERB/p_l/find/finds} {PRONOUN/p_l/object}self shocked to see n_c:0 nursing a litter of kits! n_c:0 purrs softly at the sight of {PRONOUN/p_l/object}, admitting that the litter is p_l's, and asking if {PRONOUN/p_l/subject} would like to take them back to that clan of {PRONOUN/p_l/poss}s. p_l hesitantly agrees, scooping up the kits and sending a final glance at n_c:0 before heading back to c_n camp.",
+                "exp": 10,
+                "weight": 15,
+                "new_cat": [
+                    ["age:mate", "meeting", "can_birth", "kittypet", "mate:p_l", "backstory:kittypet5"],
+                    ["litter", "age:newborn", "kittypet", "parent:p_l", "parent:0", "backstory:outsider_roots2"]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": true,
+                        "values": ["trust", "comfort"],
+                        "amount": 30
+                    },
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": true,
+                        "values": ["platonic", "romantic"],
+                        "amount": 50
+                    }
+                ],
+                "outsider_rep": 1
+            },
+            {
+                "text": "As p_l softly pushes {PRONOUN/p_l/poss} way into the twoleg den's cat door, {PRONOUN/p_l/subject} {VERB/p_l/find/finds} {PRONOUN/p_l/object}self shocked to see n_c:0 nursing a litter of kits! n_c:0 purrs softly at the sight of {PRONOUN/p_l/object}, admitting that the litter is p_l's, and then, <i>more</i> suprisingly, asking if {PRONOUN/n_c:0/subject} could join p_l in c_n and bring their kits. p_l immediatly agrees, of course, and gets to helping n_c:0 carry the kits back to camp.",
+                "exp": 10,
+                "weight": 10,
+                "new_cat": [
+                    ["age:mate", "can_birth", "mate:p_l", "backstory:kittypet6"],
+                    ["litter", "age:newborn", "kittypet", "backstory:outsider_roots2", "parent:p_l", "parent:0"]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": true,
+                        "values": ["trust", "comfort"],
+                        "amount": 30
+                    },
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": true,
+                        "values": ["platonic", "romantic"],
+                        "amount": 50
+                    }
+                ],
+                "outsider_rep": 2
+            }
+        ],
+        "fail_outcomes": [
+            {
+                "text": "As p_l approaches the specific twoleg den, {PRONOUN/p_l/subject} {VERB/p_l/think/thinks} about n_c:0. n_c:0's shining fur, n_c:0's beautiful smile, n_c:0's mesmerizing eyes... but it's all temporary. Or, it would be. But p_l's got a plan.",
+                "exp": 0,
+                "weight": 15,
+                "new_cat": [
+                    ["age:mate", "meeting", "kittypet", "mate:p_l", "backstory:kittypet5"]
+                ],
+                "lost_cats": ["p_l"],
+                "relationships": [
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": true,
+                        "values": ["trust", "comfort"],
+                        "amount": 30
+                    },
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": true,
+                        "values": ["platonic", "romantic"],
+                        "amount": 50
+                    }
+                ],
+                "outsider_rep": 0
+            },
+            {
+                "text": "As p_l softly pushes {PRONOUN/p_l/poss} way into the twoleg den's cat door, {PRONOUN/p_l/subject} {VERB/p_l/find/finds} {PRONOUN/p_l/object}self shocked to see n_c:0 with a litter of kittens... but something's wrong. As p_l approaches and calls out, {PRONOUN/p_l/subject} {VERB/p_l/recieve/recieves} no response, causing p_l to get more and more frantic until {PRONOUN/p_l/subject} {VERB/p_l/reach/reaches} n_c:0, discovering that {PRONOUN/n_c:0/subject} and {PRONOUN/n_c:0/poss} kits are nothing but cooling bodies. p_l breaks into tears, staying by n_c:0's side for a long time before finally turning back towards c_n camp.",
+                "exp": 0,
+                "weight": 20,
+                "new_cat": [
+                    ["age:mate", "meeting", "can_birth", "dead", "kittypet", "mate:p_l", "backstory:kittypet5"],
+                    ["litter", "age:newborn", "meeting", "dead", "kittypet", "parent:p_l", "parent:0"]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": true,
+                        "values": ["trust", "comfort"],
+                        "amount": 30
+                    },
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": true,
+                        "values": ["platonic", "romantic"],
+                        "amount": 50
+                    }
+                ],
+                "outsider_rep": -2
+            },
+            {
+                "text": "As p_l softly pushes {PRONOUN/p_l/poss} way into the twoleg den's cat door, {PRONOUN/p_l/subject} {VERB/p_l/find/finds} {PRONOUN/p_l/object}self shocked to see n_c:0 with a litter of kittens... but something's wrong. As p_l approaches and calls out, {PRONOUN/p_l/subject} {VERB/p_l/recieve/recieves} no response, causing p_l to get more and more frantic until {PRONOUN/p_l/subject} {VERB/p_l/reach/reaches} n_c:0, discovering that {PRONOUN/n_c:0/subject} and {PRONOUN/n_c:0/poss} kits are nothing but cooling bodies. p_l breaks into tears, but startles out of it at the sound of... a small mew? Frantically checking all the kits, {PRONOUN/p_l/subject} VERB/p_l/discover/discovers} that one of them survived! p_l nuzzles into n_c:0's body for a few long moments before scooping up the kit and turning to head back to c_n camp.",
+                "exp": 5,
+                "weight": 10,
+                "new_cat": [
+                    ["age:mate", "meeting", "can_birth", "dead", "kittypet", "mate:p_l", "backstory:kittypet5"],
+                    ["litter", "age:newborn", "meeting", "dead", "kittypet", "parent:p_l", "parent:0"],
+                    ["age:newborn", "parent:p_l", "parent:0", "backstory:outsider_roots2"]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": true,
+                        "values": ["trust", "comfort"],
+                        "amount": 30
+                    },
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["p_l"],
+                        "mutual": true,
+                        "values": ["platonic", "romantic"],
+                        "amount": 50
+                    }
+                ],
+                "outsider_rep": 0
             }
         ]
     },

@@ -81,6 +81,11 @@
             "Allow warriors and elders to choose to become mediators",
             "Warriors and elders will have a chance to become mediators upon timeskip.",
             false
+        ],
+        "apprentice_age": [
+            "Allow the leader to choose apprenticeship age",
+            "Allow the leader to choose when kittens become apprentices. Based on personality and facets.",
+            true
         ]
     },
     "relation": {

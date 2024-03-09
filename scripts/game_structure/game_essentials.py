@@ -34,6 +34,9 @@ class Game():
     misc_events_list = []
     herb_events_list = []
     freshkill_event_list = []
+    app_age = None
+    min_grad_age = 10 # will become higher or lower based on app_age
+    max_grad_age = 25 # same
 
     allegiance_list = []
     language = {}

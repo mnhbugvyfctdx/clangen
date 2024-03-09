@@ -461,14 +461,14 @@ class RoleScreen(Screens):
                      f"before Warriors and Medicine Cats. "
         elif self.the_cat.status == "apprentice":
             output = f"{self.the_cat.name} is an <b>apprentice</b>, in training to become a warrior. " \
-                     f"Kits can be made warrior apprentices at six moons of age, where they will learn how " \
+                     f"Kits can be made warrior apprentices at {game.app_age} moons of age, where they will learn how " \
                      f"to hunt and fight for their Clan. Typically, the training of an apprentice is entrusted " \
                      f"to an single warrior - their mentor. To build character, apprentices are often assigned " \
                      f"the unpleasant and grunt tasks of Clan life. Apprentices take the suffix \"paw\", " \
                      f"to represent the path their paws take towards adulthood. "
         elif self.the_cat.status == "medicine cat apprentice":
             output = f"{self.the_cat.name} is a <b>medicine cat apprentice</b>, training to become a full medicine cat. " \
-                     f"Kits can be made medicine cat apprentices at six moons of age, where they will learn how to " \
+                     f"Kits can be made medicine cat apprentices at {game.app_age} moons of age, where they will learn how to " \
                      f"heal their Clanmates and commune with StarClan. Medicine cat apprentices are typically chosen " \
                      f"for their interest in healing and/or their connecting to StarClan. Apprentices take the suffix " \
                      f"-paw, to represent the path their paws take towards adulthood."
@@ -479,14 +479,14 @@ class RoleScreen(Screens):
                      f"Apprentices take the suffix \"paw\", " \
                      f"to represent the path their paws take towards adulthood. "
         elif self.the_cat.status == "kitten":
-            output = f"{self.the_cat.name} is a <b>kitten</b>. All cats below the age of six moons are " \
+            output = f"{self.the_cat.name} is a <b>kitten</b>. All cats below the age of {game.app_age} moons are " \
                      f"considered kits. Kits " \
                      f"are prohibited from leaving camp in order to protect them from the dangers of the wild. " \
                      f"Although they don't have any official duties in the Clan, they are expected to learn the " \
                      f"legends and traditions of their Clan. They are protected by every cat in the Clan and always " \
                      f"eat first. Kit take the suffix \"kit\"."
         elif self.the_cat.status == "newborn":
-            output = f"{self.the_cat.name} is a <b>newborn kitten</b>. All cats below the age of six moons are " \
+            output = f"{self.the_cat.name} is a <b>newborn kitten</b>. All cats below the age of {game.app_age} moons are " \
                      f"considered kits. Kits " \
                      f"are prohibited from leaving camp in order to protect them from the dangers of the wild. " \
                      f"Although they don't have any official duties in the Clan, they are expected to learn the " \

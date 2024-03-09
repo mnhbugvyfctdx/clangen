@@ -8,7 +8,7 @@
       "general_backstory",
       "all_traits"
     ],
-    "m_c has reached the age of six moons and has been made an apprentice."
+    "m_c has reached the age of apprenticeship and has been made an apprentice."
   ],
   "app_1": [
     [
@@ -20,7 +20,7 @@
       "general_backstory",
       "all_traits"
     ],
-    "m_c has reached the age of six moons and has been made an apprentice, with (mentor) as {PRONOUN/m_c/poss} mentor."
+    "m_c has reached the age of apprenticeship and has been made an apprentice, with (mentor) as {PRONOUN/m_c/poss} mentor."
   ],
   "app_2": [
     [
@@ -611,7 +611,7 @@
       "general_backstory",
       "all_traits"
     ],
-    "The Clan gathers around and urges (old_name) to go to the front of the crowd. Not having a leader isn't an excuse to force a cat to stay in the nursery when they're six moons old. (old_name) is renamed m_c, and the Clan votes to make (mentor) {PRONOUN/m_c/poss} mentor."
+    "The Clan gathers around and urges (old_name) to go to the front of the crowd. Not having a leader isn't an excuse to force a cat to stay in the nursery when they're apprenticeship age. (old_name) is renamed m_c, and the Clan votes to make (mentor) {PRONOUN/m_c/poss} mentor."
   ],
   "app_35": [
     [
