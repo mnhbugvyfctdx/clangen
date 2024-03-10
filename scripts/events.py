@@ -229,9 +229,10 @@ class Events:
 
                 # base chances: normal warrior: 0.5%, apprentice age: 0.769%, over 170 moons: 0.142%, leader: 0.2%, med/dep: 0.266%, over 120 moons: 0.25%, medi: 0.363%
 
-                # in order of least chance to highest chance, so if two things apply to one cat somehow, lower chances overrite higher ones
-
-                if cat.status == 'leader':
+                # in order of least chance to highest chance, so if two things apply to one cat, lower chances overrite higher ones
+                if cat.status == 'elder':
+                    runaway_chances = int(125)
+                elif cat.status == 'leader':
                     runaway_chances = int(200)
                 elif cat.status in ('medicine cat', 'deputy'):
                     runaway_chances = int(266)
@@ -321,7 +322,7 @@ class Events:
                 SaveError(traceback.format_exc())
 
     def set_app_age(self):
-        """ Has a leader choose apprenticeship age. Not working right now. """
+        """ Has a leader choose apprenticeship age. """
         app_age_event = str("This is a bug!!")
         
         if game.clan.clan_settings["apprentice_age"]:
@@ -351,7 +352,7 @@ class Events:
                     else:
                         app_age_event = str(f"{game.clan.leader.name} steps in front of the clan, declaring the apprenticeship age to be {game.app_age} moons old.")
                     
-                    print(f"app_age was changed to {game.app_age}")
+                    print(f"{game.clan.leader.name} says app_age is {game.app_age} now")
 
                     game.cur_events_list.insert(0,
                     Single_Event(app_age_event, ["ceremony"]))

@@ -84,7 +84,7 @@
         ],
         "apprentice_age": [
             "Allow the leader to choose apprenticeship age",
-            "Allow the leader to choose when kittens become apprentices. Based on personality and facets.",
+            "Allow the leader to choose when kittens become apprentices. Based on personality.",
             true
         ]
     },
