@@ -12,8 +12,8 @@ import traceback
 
 from random import randint, choice
 
-from cat.history import History
-from .patrol import Patrol
+from scripts.cat.history import History
+from scripts.patrol.patrol import Patrol
 
 import ujson
 
