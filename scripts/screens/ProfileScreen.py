@@ -844,7 +844,7 @@ class ProfileScreen(Screens):
         output += the_cat.skills.skill_string()
         # NEWLINE ----------
         output += "\n"
-
+        
         # EXPERIENCE
         output += 'experience: ' + str(the_cat.experience_level)
 

@@ -340,7 +340,6 @@ class Cat():
                 
             if not skill_dict:
                 self.skills = CatSkills.generate_new_catskills(self.status, self.moons)
-
         # In camp status
         self.in_camp = 1
         if "biome" in kwargs:

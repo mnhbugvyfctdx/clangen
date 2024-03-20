@@ -141,16 +141,64 @@ class SkillPath(Enum):
         "ghost sense",
         "ghost sight",
         "ghost speaker"
+    ),
+    TRACKER = (
+        "tracking instincts",
+        "decent tracker",
+        "good tracker",
+        "master tracker"
+    ),
+    LEADER = (
+        "likes giving orders",
+        "leadership skills",
+        "good patrol leader",
+        "natural leader"
+    ),
+    MEMORY = (
+        "plays memory games",
+        "good memory",
+        "great memory",
+        "amazing memory"
+    ),
+    TUNNELER = (
+        "dirty paws",
+        "interested in tunneling",
+        "good tunneler",
+        "master tunneler"
+    ),
+    AGILE = (
+        "light paws",
+        "quick on their feet",
+        "good at swerving",
+        "very agile"
+    ),
+    ALERT = (
+        "light sleeper",
+        "alert",
+        "vigilant",
+        "sleeps with one eye open"
+    ),
+    MANIPULATION = (
+        "honey-sweet voice",
+        "gets others to do their work",
+        "has clanmates wrapped around their tail",
+        "has a say in the other clan's affairs"
+    ),
+    STEALTH = (
+        "likes hide-and-seek",
+        "good at hiding",
+        "great at stalking",
+        "blends into shadows"
     )
     
     @staticmethod
     def get_random(exclude:list=()):
         """Get a random path, with more uncommon paths being less common"""
         
-        uncommon_paths = [i for i in [SkillPath.GHOST, SkillPath.PROPHET, 
+        uncommon_paths = [i for i in [SkillPath.GHOST, SkillPath.PROPHET,
                           SkillPath.CLAIRVOYANT, SkillPath.DREAM,
-                          SkillPath.OMEN, SkillPath.STAR, SkillPath.HEALER, 
-                          SkillPath.DARK]
+                          SkillPath.OMEN, SkillPath.STAR, SkillPath.HEALER,
+                          SkillPath.DARK, SkillPath.MANIPULATION]
                           if i not in exclude]
         
         
@@ -189,7 +237,7 @@ class Skill():
         SkillPath.SWIMMER: "swimming",
         SkillPath.SPEAKER: "speaking",
         SkillPath.MEDIATOR: "mediating",
-        SkillPath.CLEVER: "clever",
+        SkillPath.CLEVER: "cleverness",
         SkillPath.INSIGHTFUL: "advising",
         SkillPath.SENSE: "observing",
         SkillPath.KIT: "caretaking",
@@ -203,7 +251,15 @@ class Skill():
         SkillPath.CLAIRVOYANT: "predicting",
         SkillPath.PROPHET: "prophesying",
         SkillPath.GHOST: "ghosts",
-        SkillPath.DARK: "dark forest"
+        SkillPath.DARK: "dark forest",
+        SkillPath.TRACKER: "tracking",
+        SkillPath.LEADER: "leading",
+        SkillPath.MEMORY: "memorizing",
+        SkillPath.TUNNELER: "tunneling",
+        SkillPath.AGILE: "agility",
+        SkillPath.ALERT: "alertness",
+        SkillPath.MANIPULATION: "manipulating",
+        SkillPath.STEALTH: "sneaking"
     }
     
     
@@ -318,7 +374,7 @@ class CatSkills:
     #Mentor Inflence groups.
     # pylint: disable=unsupported-binary-operation
     influence_flags = {
-        SkillPath.TEACHER: SkillTypeFlag.STRONG | SkillTypeFlag.AGILE | SkillTypeFlag.SMART | SkillTypeFlag.OBSERVANT | SkillTypeFlag.SOCIAL,
+        SkillPath.TEACHER: SkillTypeFlag.SMART | SkillTypeFlag.OBSERVANT | SkillTypeFlag.SOCIAL,
         SkillPath.HUNTER: SkillTypeFlag.STRONG | SkillTypeFlag.AGILE | SkillTypeFlag.OBSERVANT,
         SkillPath.FIGHTER: SkillTypeFlag.STRONG | SkillTypeFlag.AGILE,
         SkillPath.RUNNER: SkillTypeFlag.AGILE,
@@ -340,7 +396,15 @@ class CatSkills:
         SkillPath.CLAIRVOYANT: SkillTypeFlag.SUPERNATURAL | SkillTypeFlag.OBSERVANT,
         SkillPath.PROPHET: SkillTypeFlag.SUPERNATURAL,
         SkillPath.GHOST: SkillTypeFlag.SUPERNATURAL,
-        SkillPath.DARK: SkillTypeFlag.SUPERNATURAL
+        SkillPath.DARK: SkillTypeFlag.SUPERNATURAL,
+        SkillPath.TRACKER: SkillTypeFlag.AGILE | SkillTypeFlag.OBSERVANT,
+        SkillPath.LEADER: SkillTypeFlag.SOCIAL | SkillTypeFlag.SMART,
+        SkillPath.MEMORY: SkillTypeFlag.SMART,
+        SkillPath.TUNNELER: SkillTypeFlag.STRONG,
+        SkillPath.AGILE: SkillTypeFlag.AGILE,
+        SkillPath.ALERT: SkillTypeFlag.OBSERVANT | SkillTypeFlag.SMART,
+        SkillPath.MANIPULATION: SkillTypeFlag.SMART | SkillTypeFlag.SOCIAL,
+        SkillPath.STEALTH: SkillTypeFlag.AGILE | SkillTypeFlag.OBSERVANT
     }
     # pylint: enable=unsupported-binary-operation
     

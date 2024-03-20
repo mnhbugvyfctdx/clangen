@@ -144,7 +144,7 @@ def json_load():
             new_cat.no_mates = cat["no_mates"] if "no_mates" in cat else False
             new_cat.no_retire = cat["no_retire"] if "no_retire" in cat else False
             new_cat.exiled = cat["exiled"]
-
+            
             if "skill_dict" in cat:
                 new_cat.skills = CatSkills(cat["skill_dict"])
             elif "skill" in cat:
