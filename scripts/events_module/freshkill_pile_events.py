@@ -37,7 +37,7 @@ class Freshkill_Events():
             return
 
         if cat.ID not in nutrition_info.keys():
-            print(f"WARNING: Could not find cat with ID {cat.ID}({cat.name}) in the nutrition information.")
+            print(f"WARNING: Could not find cat with ID {cat.ID}({cat.name}) in the nutrition information. This may be because they just died, got lost, or joined the clan.")
             return
 
         # get all events for a certain status of a cat
