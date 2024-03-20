@@ -1221,19 +1221,19 @@ class Events:
 
                         chance = game.config["roles"]["mediator_app_chance"]
                         if cat.personality.trait in [
-                            'charismatic', 'cunning', 'responsible', 'wise', 'thoughtful', 'optimistic', 'empathetic'
+                            'charismatic', 'cunning', 'wise', 'thoughtful', 'optimistic', 'empathetic'
                         ]:
                             chance = int(chance / 1.5)
                         if cat.personality.trait in [
-                            'bloodthirsty', 'cold', 'vengeful', 'arrogant', 'childish', 'oblivious', 'troublesome'
+                            'cold', 'vengeful', 'arrogant', 'childish', 'oblivious', 'troublesome', 'grumpy'
                         ]:
                             chance = int(chance * 1.5)
                         if cat.skills.primary.path in [
-                            SkillPath.MEDIATOR, SkillPath.SPEAKER, SkillPath.INSIGHTFUL, SkillPath.CLEVER, SkillPath.CLAIRVOYANT
+                            SkillPath.MEDIATOR, SkillPath.SPEAKER, SkillPath.INSIGHTFUL, SkillPath.CLEVER, SkillPath.CLAIRVOYANT, SkillPath.MANIPULATION, SkillPath.EMPATHY
                         ]:
                             chance = int(chance / 1.5)
                         if cat.skills.secondary.path in [
-                            SkillPath.MEDIATOR, SkillPath.SPEAKER, SkillPath.INSIGHTFUL, SkillPath.CLEVER, SkillPath.CLAIRVOYANT
+                            SkillPath.MEDIATOR, SkillPath.SPEAKER, SkillPath.INSIGHTFUL, SkillPath.CLEVER, SkillPath.CLAIRVOYANT, SkillPath.MANIPULATION, SkillPath.EMPATHY
                         ]:
                             chance = int(chance / 1.5)
                         if cat.skills.primary.path in [
@@ -2232,33 +2232,44 @@ class Events:
                     0, Single_Event(f"{game.clan.name}Clan has no leader!"))
                 
     def choose_new_deputy(self, possible_deputies=list):
-        """ Chooses a new deputy based on relationship w/ current leader, if leader exists. Otherwise random. """
+        """ Chooses a new deputy partially based on relationship w/ current leader, if leader exists. Otherwise completely random. """
         if not game.clan.leader.outside and not game.clan.leader.dead:
             random_cat = Events.random_deputy_pick(self, possible_deputies=possible_deputies)
-        else:
-            random_cat = random.choice(possible_deputies)
-        
-        return random_cat
-
-    def random_deputy_pick(self, possible_deputies=list):
-        random_cat = random.choice(possible_deputies)
-        romantic_to = check_relationship_value(cat_from=game.clan.leader, cat_to=random_cat, rel_value="romantic")
-        platonic_to = check_relationship_value(cat_from=game.clan.leader, cat_to=random_cat, rel_value="platonic")
-        dislike_to = check_relationship_value(cat_from=game.clan.leader, cat_to=random_cat, rel_value="dislike")
-        respect_to = check_relationship_value(cat_from=game.clan.leader, cat_to=random_cat, rel_value="admiration")
-        comfort_to = check_relationship_value(cat_from=game.clan.leader, cat_to=random_cat, rel_value="comfortable")
-        jealousy_to = check_relationship_value(cat_from=game.clan.leader, cat_to=random_cat, rel_value="jealousy")
-        trust_to = check_relationship_value(cat_from=game.clan.leader, cat_to=random_cat, rel_value="trust")
-        chance = 500
-        chance = int(chance + romantic_to + platonic_to - dislike_to + respect_to + comfort_to - jealousy_to + trust_to)
-        final_chance = randint(1, 100000)
-        if final_chance <= chance:
             return random_cat
         else:
-            Events.random_deputy_pick(self, possible_deputies=possible_deputies)
+            random_cat = random.choice(possible_deputies)
+            print(f"New deputy: {random_cat.name} ({random_cat.ID})")
+            return random_cat
 
+    def random_deputy_pick(self, possible_deputies=list):
+        random_cat = None
+
+        while random_cat is None:
+            for item in possible_deputies:
+                random_cat = item
+                romantic_to = check_relationship_value(cat_from=game.clan.leader, cat_to=random_cat, rel_value="romantic")
+                platonic_to = check_relationship_value(cat_from=game.clan.leader, cat_to=random_cat, rel_value="platonic")
+                dislike_to = check_relationship_value(cat_from=game.clan.leader, cat_to=random_cat, rel_value="dislike")
+                respect_to = check_relationship_value(cat_from=game.clan.leader, cat_to=random_cat, rel_value="admiration")
+                comfort_to = check_relationship_value(cat_from=game.clan.leader, cat_to=random_cat, rel_value="comfortable")
+                jealousy_to = check_relationship_value(cat_from=game.clan.leader, cat_to=random_cat, rel_value="jealousy")
+                trust_to = check_relationship_value(cat_from=game.clan.leader, cat_to=random_cat, rel_value="trust")
+
+                chance = 500
+                chance = int(chance + (romantic_to * 5) + (platonic_to * 5) - (dislike_to * 10) + (respect_to * 5) + (comfort_to * 5) - (jealousy_to * 10) + (trust_to * 5))
+                final_chance = randint(1, 100000)
+                if chance <= 0:
+                    chance = 1
+                if final_chance > chance:
+                    random_cat = None
+                else:
+                    print(f"New deputy: {random_cat.name} ({random_cat.ID})")
+                    print(f"romantic: {romantic_to}, platonic: {platonic_to}, dislike: {dislike_to}, respect: {respect_to}, comfort: {comfort_to}, jealousy: {jealousy_to}, trust: {trust_to}")
+            
+                    return random_cat
+        
     def check_and_promote_deputy(self):
-        """Checks if a new deputy needs to be appointed, and appointed them if needed. """
+        """ Checks if a new deputy needs to be appointed, and appointed them if needed. """
         if (not game.clan.deputy or game.clan.deputy.dead
                 or game.clan.deputy.outside or game.clan.deputy.status == "elder"):
             if game.clan.clan_settings.get('deputy'):
@@ -2269,11 +2280,15 @@ class Events:
                         lambda x: not x.dead and not x.outside and x.status ==
                                   "warrior" and (x.apprentice or x.former_apprentices),
                         Cat.all_cats_list))
+                
+                possible_deputies_sorted = sorted(possible_deputies, key=lambda x: (check_relationship_value(cat_from=game.clan.leader, cat_to=x, rel_value="romantic") + check_relationship_value(cat_from=game.clan.leader, cat_to=x, rel_value="platonic") + check_relationship_value(cat_from=game.clan.leader, cat_to=x, rel_value="trust") + check_relationship_value(cat_from=game.clan.leader, cat_to=x, rel_value="comfortable") + check_relationship_value(cat_from=game.clan.leader, cat_to=x, rel_value="admiration")), reverse=True)
+
+                possible_deputies = possible_deputies_sorted
 
                 # If there are possible deputies, choose from that list.
                 if possible_deputies:
-                    random_cat = Events.choose_new_deputy(possible_deputies=possible_deputies)
-                    involved_cats = [random_cat.ID]
+                    
+                    random_cat = Events.choose_new_deputy(self, possible_deputies=possible_deputies)
 
                     # Gather deputy and leader status, for determination of the text.
                     if game.clan.leader:
@@ -2306,7 +2321,6 @@ class Events:
                                     f"They don't know if {game.clan.deputy.name} would approve, "
                                     f"but life must go on. "
                                 ])
-                                involved_cats.append(game.clan.deputy.ID)
 
                             else:
                                 previous_deputy_mention = ""
@@ -2314,8 +2328,7 @@ class Events:
                             text = f"{game.clan.leader.name} chooses " \
                                    f"{random_cat.name} to take over " \
                                    f"as deputy. " + previous_deputy_mention
-
-                            involved_cats.append(game.clan.leader.ID)
+                            
                     elif leader_status == "not_here" and deputy_status == "here":
                         text = f"The Clan is without a leader, but a " \
                                f"new deputy must still be named.  " \
@@ -2348,7 +2361,7 @@ class Events:
                         text = random.choice(possible_events)
                     else:
                         # This should never happen. Failsafe.
-                        text = f"{random_cat.name} becomes deputy. "
+                        text= f" {random_cat.name} becomes deputy. "
                 else:
                     # If there are no possible deputies, choose someone else, with special text.
                     all_warriors = list(
@@ -2356,8 +2369,7 @@ class Events:
                             lambda x: not x.dead and not x.outside and x.status
                                       == "warrior", Cat.all_cats_list))
                     if all_warriors:
-                        random_cat = Events.choose_new_deputy(possible_deputies=all_warriors)
-                        involved_cats = [random_cat.ID]
+                        random_cat = Events.choose_new_deputy(self, possible_deputies=all_warriors)
                         text = f"No cat is truly fit to be deputy, " \
                                f"but the position can't remain vacant. " \
                                f"{random_cat.name} is appointed as the new deputy. "
@@ -2368,13 +2380,11 @@ class Events:
                             Single_Event(
                                 "There are no cats fit to become deputy. ",
                                 "ceremony"))
-                        return
-
-                random_cat.status_change("deputy")
-                game.clan.deputy = random_cat
+                game.clan.deputy.ID = random_cat.ID
+                random_cat.status = "deputy"
 
                 game.cur_events_list.append(
-                    Single_Event(text, "ceremony", involved_cats))
+                    Single_Event(text, "ceremony"))
 
             else:
                 game.cur_events_list.insert(

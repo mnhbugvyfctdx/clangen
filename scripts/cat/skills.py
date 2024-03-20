@@ -104,13 +104,13 @@ class SkillPath(Enum):
         "curious about StarClan",
         "connection to StarClan",
         "deep StarClan bond",
-        "unshakable StarClan link",
+        "unshakable StarClan link"
     )
     DARK = (
         "interested in the Dark Forest",
         "Dark Forest affinity",
         "deep Dark Forest bond",
-        "unshakable Dark Forest link",
+        "unshakable Dark Forest link"
     )
     OMEN = (
         "interested in oddities",
@@ -141,54 +141,60 @@ class SkillPath(Enum):
         "ghost sense",
         "ghost sight",
         "ghost speaker"
-    ),
+    )
     TRACKER = (
         "tracking instincts",
         "decent tracker",
         "good tracker",
         "master tracker"
-    ),
+    )
     LEADER = (
         "likes giving orders",
         "leadership skills",
         "good patrol leader",
         "natural leader"
-    ),
+    )
     MEMORY = (
         "plays memory games",
         "good memory",
         "great memory",
         "amazing memory"
-    ),
+    )
     TUNNELER = (
         "dirty paws",
         "interested in tunneling",
         "good tunneler",
         "master tunneler"
-    ),
+    )
     AGILE = (
         "light paws",
         "quick on their feet",
         "good at swerving",
         "very agile"
-    ),
+    )
     ALERT = (
         "light sleeper",
         "alert",
         "vigilant",
         "sleeps with one eye open"
-    ),
+    )
     MANIPULATION = (
         "honey-sweet voice",
         "gets others to do their work",
         "has clanmates wrapped around their tail",
         "has a say in the other clan's affairs"
-    ),
+    )
     STEALTH = (
         "likes hide-and-seek",
         "good at hiding",
         "great at stalking",
         "blends into shadows"
+    )
+    EMPATHY = (
+        "good at comforting",
+        "can sense emotions",
+        "calming presence",
+        "reader of emotions"
     )
     
     @staticmethod
@@ -198,7 +204,7 @@ class SkillPath(Enum):
         uncommon_paths = [i for i in [SkillPath.GHOST, SkillPath.PROPHET,
                           SkillPath.CLAIRVOYANT, SkillPath.DREAM,
                           SkillPath.OMEN, SkillPath.STAR, SkillPath.HEALER,
-                          SkillPath.DARK, SkillPath.MANIPULATION]
+                          SkillPath.DARK, SkillPath.MANIPULATION, SkillPath.EMPATHY]
                           if i not in exclude]
         
         
@@ -259,7 +265,8 @@ class Skill():
         SkillPath.AGILE: "agility",
         SkillPath.ALERT: "alertness",
         SkillPath.MANIPULATION: "manipulating",
-        SkillPath.STEALTH: "sneaking"
+        SkillPath.STEALTH: "sneaking",
+        SkillPath.EMPATHY: "empathizing"
     }
     
     
@@ -404,7 +411,8 @@ class CatSkills:
         SkillPath.AGILE: SkillTypeFlag.AGILE,
         SkillPath.ALERT: SkillTypeFlag.OBSERVANT | SkillTypeFlag.SMART,
         SkillPath.MANIPULATION: SkillTypeFlag.SMART | SkillTypeFlag.SOCIAL,
-        SkillPath.STEALTH: SkillTypeFlag.AGILE | SkillTypeFlag.OBSERVANT
+        SkillPath.STEALTH: SkillTypeFlag.AGILE | SkillTypeFlag.OBSERVANT,
+        SkillPath.EMPATHY: SkillTypeFlag.OBSERVANT | SkillTypeFlag.SOCIAL
     }
     # pylint: enable=unsupported-binary-operation
     
