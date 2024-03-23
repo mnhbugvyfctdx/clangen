@@ -214,6 +214,20 @@ class Pelt():
         
         return new_pelt
     
+    def generate_albinism(self):
+        chance = random.randint(1, 80)
+        if chance == 1:
+            return True
+        else:
+            return False
+
+    def generate_melanism(self):
+        chance = random.randint(1, 80)
+        if chance == 1:
+            return True
+        else:
+            return False
+    
     def check_and_convert(self, convert_dict):
         """Checks for old-type properties for the apperence-related properties
         that are stored in Pelt, and converts them. To be run when loading a cat in. """

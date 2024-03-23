@@ -558,5 +558,65 @@
         "prudence",
         "judgement",
         "foresight"
+    ],
+    "patient": [
+        "patience",
+        "composure",
+        "tranquility",
+        "foresight",
+        "calmness",
+        "carefulness",
+        "exemplar"
+    ],
+    "empathetic": [
+        "empathy",
+        "emotion",
+        "kindness",
+        "thoughtfulness",
+        "compassion",
+        "sincerity",
+        "insight"
+    ],
+    "altruistic": [
+        "empathy",
+        "kindness",
+        "thoughtfulness",
+        "compassion",
+        "selflessness",
+        "sincerity",
+        "emotion",
+        "insight"
+    ],
+    "hot-headed": [
+        "initiative",
+        "intensity",
+        "strong will",
+        "spirit",
+        "stubbornness",
+        "drive",
+        "ferocity",
+        "vigor"
+    ],
+    "humourous": [
+        "enthusiasm",
+        "spirit",
+        "energy",
+        "humor",
+        "friendliness",
+        "liveliness",
+        "tenacity",
+        "openness",
+        "zeal"
+    ],
+    "optimistic": [
+        "hope",
+        "spirit",
+        "support",
+        "enthusiasm",
+        "endurance",
+        "patience",
+        "composure",
+        "resilience",
+        "commitment"
     ]
 }

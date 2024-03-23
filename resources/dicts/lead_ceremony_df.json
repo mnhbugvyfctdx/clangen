@@ -33,7 +33,7 @@
     },
     "bloodthirsty": {
       "tags": [],
-      "lead_trait": ["bloodthirsty"],
+      "lead_trait": ["bloodthirsty", "vengeful", "cold"],
       "text": [
             "m_c leaves to speak with the Dark Forest. {PRONOUN/m_c/subject/CAP} {VERB/r_c/shut/shuts} {PRONOUN/m_c/poss} eyes and {VERB/m_c/awaken/awakens} under an oppressing darkness, devoid of the stars {PRONOUN/m_c/subject} left behind. {PRONOUN/m_c/subject/CAP} {VERB/m_c/turn/turns} around to see a shadowy group of cats approaching, triumph in their eyes."
       ]
@@ -43,7 +43,7 @@
 
   "default_life": {
           "text": "r_c stalks forward, eyes flashing. \"With this life, I grant you [virtue].\" {PRONOUN/r_c/subject} {VERB/r_c/meow/meows}, before disappearing back into the darkness.",
-          "virtue": ["energy", "strength", "determination"]
+          "virtue": ["energy", "strength", "determination", "persistence", "ambition", "authority", "certainty","cunning"]
         },
 
   "lives": {
@@ -55,7 +55,7 @@
       "life_giving": [
         {
           "text": "The cat stands and stalks towards m_c, circling {PRONOUN/m_c/object} as though a hunter appraising their next meal. \"You come here, ignorant to the lands you walk, expecting a gift? A boon? You'll all wallow here in the darkness with me one day,\" the cat's eyes pierce into m_c's pelt, \"You'll remember me as r_c, and you'll remember that I've granted you a life for [virtue]. And one day, we'll speak again.\"",
-          "virtue": ["strength unending", "ruthless efficiency", "never-ending ambition", "righteous anger", "brutality in the face of opposition"]
+          "virtue": ["strength unending", "ruthless efficiency", "never-ending ambition", "righteous anger", "brutality in the face of opposition", "a silver tongue for lying"]
         }
       ]
     },
@@ -76,7 +76,7 @@
     "benevolent_adult": {
       "tags": [],
       "lead_trait": [],
-      "star_trait": ["faithful", "loving", "responsible", "thoughtful", "wise", "charismatic"],
+      "star_trait": ["faithful", "loving", "responsible", "thoughtful", "wise", "charismatic", "altruistic", "optimistic"],
       "rank": ["warrior", "elder", "medicine cat", "mediator", "apprentice", "deputy", "medicine cat apprentice", "mediator apprentice"],
       "life_giving": [
         {
@@ -90,7 +90,7 @@
     "abrasive_adult": {
       "tags": [],
       "lead_trait": [],
-      "star_trait": ["ambitious", "bloodthirsty", "cold", "fierce", "shameless", "strict", "troublesome", "vengeful"],
+      "star_trait": ["ambitious", "bloodthirsty", "cold", "fierce", "shameless", "strict", "troublesome", "vengeful", "hot-headed"],
       "rank": ["warrior", "elder", "medicine cat", "mediator", "apprentice", "deputy", "medicine cat apprentice", "mediator apprentice"],
       "life_giving": [
         {
@@ -104,7 +104,7 @@
     "outgoing_adult": {
       "tags": [],
       "lead_trait": [],
-      "star_trait": ["adventurous", "bold", "charismatic", "childish", "confident", "daring", "playful", "righteous"],
+      "star_trait": ["adventurous", "bold", "charismatic", "childish", "confident", "daring", "playful", "righteous", "humourous"],
       "rank": ["warrior", "elder", "medicine cat", "mediator", "apprentice", "deputy", "medicine cat apprentice", "mediator apprentice"],
       "life_giving": [
         {
@@ -1113,11 +1113,18 @@
         "m_c_star wakes, a hissing echo of {PRONOUN/m_c/poss} new name lingering in the air."
       ]
     },
-    "bloodthirsty": {
+    "mean": {
       "tags": [],
-      "lead_trait": ["bloodthirsty"],
+      "lead_trait": ["bloodthirsty", "cold", "vengeful", "ambitious", "hot-headed", "arrogant"],
       "text": [
         "r_c hails m_c by {PRONOUN/m_c/poss} new name, m_c_star, telling {PRONOUN/m_c/object} that {PRONOUN/m_c/poss} old pathetic life is no more. {PRONOUN/m_c/subject/CAP} {VERB/m_c/are/is} granted guardianship of c_n, and {VERB/m_c/are/is} told to use {PRONOUN/m_c/poss} new power however {PRONOUN/m_c/subject} wish. The Dark Forest's hissing and yowls echo in the dusky clearing as the new leader begins to wake up. m_c_star stands, feeling a new strength within {PRONOUN/m_c/poss} body, and grins."
+      ]
+    },
+    "nice": {
+      "tags": [],
+      "lead_trait": ["loving", "compassionate", "careful", "altruistic", "righteous", "responsible", "thoughtful", "empathetic"],
+      "text": [
+        "r_c hails m_c by {PRONOUN/m_c/poss} new name, m_c_star, telling {PRONOUN/m_c/object} that {PRONOUN/m_c/poss} old pathetic life is no more. {PRONOUN/m_c/subject/CAP} {VERB/m_c/are/is} granted guardianship of c_n, and {VERB/m_c/are/is} told to use {PRONOUN/m_c/poss} new power however {PRONOUN/m_c/subject} wish. The Dark Forest's hissing and yowls echo in the dusky clearing as the new leader begins to wake up. m_c_star stands, feeling a new, gripping cold strength within {PRONOUN/m_c/poss} body, and shudders."
       ]
     }
   }

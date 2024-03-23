@@ -535,10 +535,32 @@ class EventsScreen(Screens):
     def update_events_display(self):
 
         self.season.set_text(f'Current season: {game.clan.current_season}')
-        if game.clan.age == 1:
-            self.clan_age.set_text(f'Clan age: {game.clan.age} moon')
-        if game.clan.age != 1:
-            self.clan_age.set_text(f'Clan age: {game.clan.age} moons')
+        clanyears = str(game.clan.age / 12)
+        clanyears = clanyears[:4]
+        if clanyears[-1] == '0':
+            clanyears = clanyears[:-1]
+        if clanyears[-1] == '.':
+            clanyears = clanyears[:-1]
+        if clanyears == 1:
+            years = f"{clanyears} year"
+        else:
+            years = f"{clanyears} years"
+
+        if game.clan.clan_settings['showyears']:
+            if game.clan.age == 1:
+                self.clan_age.set_text(f'Clan age: {game.clan.age} moon | {years}')
+            if game.clan.age != 1:
+                self.clan_age.set_text(f'Clan age: {game.clan.age} moons | {years}')
+        elif game.clan.clan_settings['onlyyears']:
+            if game.clan.age == 1:
+                self.clan_age.set_text(f'Clan age: {years}')
+            if game.clan.age != 1:
+                self.clan_age.set_text(f'Clan age: {years}')
+        else:
+            if game.clan.age == 1:
+                self.clan_age.set_text(f'Clan age: {game.clan.age} moon')
+            if game.clan.age != 1:
+                self.clan_age.set_text(f'Clan age: {game.clan.age} moons')
 
         for ele in self.display_events_elements:
             self.display_events_elements[ele].kill()

@@ -167,14 +167,38 @@ class RoleScreen(Screens):
 
         text = f"<b>{self.the_cat.status}</b>\n{self.the_cat.personality.trait}\n"
 
-        text += f"{self.the_cat.moons} "
+        years = str(self.the_cat.moons / 12)
+        years = years[:4]
+        if years[-1] == "0":
+            years = years[:-1]
+        if years[-1] == ".":
+            years = years[:-1]
 
-        if self.the_cat.moons == 1:
-            text += "moon  |  "
-        else:
-            text += "moons  |  "
+        if not game.clan.clan_settings['onlyyears'] and game.clan.clan_settings['showyears']:
+            text += f"{self.the_cat.moons} "
+  
+            if self.the_cat.moons == 1:
+                text += "moon  |  "
+            else:
+                text += "moons  |  "
+        elif not game.clan.clan_settings['onlyyears'] and not game.clan.clan_settings['showyears']:
+            text += f"{self.the_cat.moons} "
+  
+            if self.the_cat.moons == 1:
+                text += "moon"
+            else:
+                text += "moons"
 
-        text += self.the_cat.genderalign + "\n"
+        if game.clan.clan_settings['showyears'] or game.clan.clan_settings['onlyyears']:
+            text += f"{years} "
+            if years == 1:
+                text += "year"
+            else:
+                text += "years"
+
+
+        text += self.the_cat.genderalign
+        text += "\n"
 
         if self.the_cat.mentor:
             text += "mentor: "

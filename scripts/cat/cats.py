@@ -183,6 +183,8 @@ class Cat():
         self.parent2 = parent2
         self.adoptive_parents = []
         self.pelt = pelt if pelt else Pelt()
+        self.albinistic = False
+        self.melanistic = False
         self.former_mentor = []
         self.patrol_with_mentor = 0
         self.apprentice = []
@@ -310,6 +312,15 @@ class Cat():
 
             # APPEARANCE
             self.pelt = Pelt.generate_new_pelt(self.gender, [Cat.fetch_cat(i) for i in (self.parent1, self.parent2) if i], self.age)
+
+            self.albinistic = Pelt.generate_albinism(self)
+            self.melanistic = Pelt.generate_melanism(self)
+            if self.melanistic is True and self.albinistic is True:
+                asdfv = randint(1, 2)
+                if asdfv == 1:
+                    self.melanistic = False
+                else:
+                    self.albinistic = False
             
             #Personality
             self.personality = Personality(kit_trait=self.is_baby())
@@ -2900,6 +2911,8 @@ class Cat():
                 "pelt_name": self.pelt.name,
                 "pelt_color": self.pelt.colour,
                 "pelt_length": self.pelt.length,
+                "albinistic": self.albinistic,
+                "melanistic": self.melanistic,
                 "sprite_kitten": self.pelt.cat_sprites['kitten'],
                 "sprite_adolescent": self.pelt.cat_sprites['adolescent'],
                 "sprite_adult": self.pelt.cat_sprites['adult'],

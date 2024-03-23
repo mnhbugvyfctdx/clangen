@@ -558,8 +558,34 @@ class ChooseAdoptiveParentScreen(Screens):
             name,
             object_id="#text_box_34_horizcenter")
 
-        info = str(self.the_cat.moons) + " moons\n" + self.the_cat.status + "\n" + self.the_cat.genderalign + "\n" + \
-               self.the_cat.personality.trait
+        # cat's age in years
+        years = str(self.the_cat.moons / 12)
+        years = years[:4]
+        if years[-1] == '0':
+            years = years[:-1]
+        if years[-1] == '.':
+            years = years[:-1]
+
+        if game.clan.clan_settings['showyears']:
+            if years == 1:
+                info = str(self.the_cat.moons) + " moons\n  |  " + f"{years} year" + "\n" + \
+                   self.the_cat.status + "\n" + self.the_cat.genderalign + "\n" + \
+                   self.the_cat.personality.trait
+            else:
+                info = str(self.the_cat.moons) + " moons\n  |  " + f"{years} years" + "\n" + \
+                   self.the_cat.status + "\n" + self.the_cat.genderalign + "\n" + \
+                   self.the_cat.personality.trait
+        elif game.clan.clan_settings['onlyyears']:
+            if years == 1:
+                info = str(years) + " year\n" + self.the_cat.status + "\n" + \
+                    self.the_cat.genderalign + "\n" + self.the_cat.personality.trait
+            else:
+                info = str(years) + " years\n" + self.the_cat.status + "\n" + \
+                    self.the_cat.genderalign + "\n" + self.the_cat.personality.trait
+        else:
+            info = str(self.the_cat.moons) + " moons\n"  + self.the_cat.status + "\n" + \
+                    self.the_cat.genderalign + "\n" + self.the_cat.personality.trait
+            
         self.current_cat_elements["info"] = pygame_gui.elements.UITextBox(info,
                                                                           scale(pygame.Rect((1000, 350), (188, 200))),
                                                                           object_id="#text_box_22_horizcenter_vertcenter_spacing_95",
@@ -691,9 +717,35 @@ class ChooseAdoptiveParentScreen(Screens):
             scale(pygame.Rect((130, 230), (220, 60))),
             name,
             object_id="#text_box_34_horizcenter")
+        
+        # cat's age in years
+        years = str(self.selected_cat.moons / 12)
+        years = years[:4]
+        if years[-1] == '0':
+            years = years[:-1]
+        if years[-1] == '.':
+            years = years[:-1]
 
-        info = str(self.selected_cat.moons) + " moons\n" + self.selected_cat.status + "\n" + \
-               self.selected_cat.genderalign + "\n" + self.selected_cat.personality.trait
+        if game.clan.clan_settings['showyears']:
+            if years == 1:
+                info = str(self.selected_cat.moons) + " moons\n  |  " + f"{years} year" + "\n" + \
+                   self.selected_cat.status + "\n" + self.selected_cat.genderalign + "\n" + \
+                   self.selected_cat.personality.trait
+            else:
+                info = str(self.selected_cat.moons) + " moons\n  |  " + f"{years} years" + "\n" + \
+                   self.selected_cat.status + "\n" + self.selected_cat.genderalign + "\n" + \
+                   self.selected_cat.personality.trait
+        elif game.clan.clan_settings['onlyyears']:
+            if years == 1:
+                info = str(years) + " year\n" + self.selected_cat.status + "\n" + \
+                    self.selected_cat.genderalign + "\n" + self.selected_cat.personality.trait
+            else:
+                info = str(years) + " years\n" + self.selected_cat.status + "\n" + \
+                    self.selected_cat.genderalign + "\n" + self.selected_cat.personality.trait
+        else:
+            info = str(self.selected_cat.moons) + " moons\n"  + self.selected_cat.status + "\n" + \
+                    self.selected_cat.genderalign + "\n" + self.selected_cat.personality.trait
+                
         self.selected_cat_elements["info"] = pygame_gui.elements.UITextBox(info,
                                                                    scale(pygame.Rect((412, 350), (188, 200))),
                                                                    object_id="#text_box_22_horizcenter_vertcenter_spacing_95",
