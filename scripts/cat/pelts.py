@@ -156,6 +156,8 @@ class Pelt():
                  scars:list=None,
                  tint:str="none",
                  skin:str="BLACK",
+                 albinistic=False,
+                 melanistic=False,
                  white_patches_tint:str="none",
                  kitten_sprite:int=None,
                  adol_sprite:int=None,
@@ -176,6 +178,8 @@ class Pelt():
         self.vitiligo = vitiligo
         self.length=length
         self.points = points
+        self.albinistic = albinistic
+        self.melanistic = melanistic
         self.accessory = accessory
         self.paralyzed = paralyzed
         self.opacity = opacity
@@ -981,23 +985,59 @@ class Pelt():
         pattern_des = {
             "Tabby": "c_n tabby",
             "Speckled": "speckled c_n",
-            "Bengal": "unusually dappled c_n",
-            "Marbled": "c_n tabby",
-            "Ticked": "c_n ticked",
+            "Bengal": "c_n bengal",
+            "Marbled": "marbled c_n tabby",
+            "Ticked": "ticked c_n tabby",
             "Smoke": "c_n smoke",
-            "Mackerel": "c_n tabby",
+            "Mackerel": "mackerel c_n tabby",
             "Classic": "c_n tabby",
             "Agouti": "c_n tabby",
-            "Singlestripe": "dorsal-striped c_n",
-            "Rosette": "unusually spotted c_n",
+            "Singlestripe": "back-striped c_n",
+            "Rosette": "c_n rosetted",
             "Sokoke": "c_n tabby",
             "Masked": "masked c_n tabby"
+        }
+        eye_colour_strings = {
+            'YELLOW': 'yellow',
+            'AMBER': 'amber',
+            'HAZEL': 'hazel',
+            'PALEGREEN': 'pale green',
+            'GREEN': 'green', 
+            'BLUE': 'blue',
+            'DARKBLUE': 'dark blue',
+            'GREY': 'gray',
+            'CYAN': 'cyan',
+            'EMERALD': 'emerald',
+            'PALEBLUE': 'pale blue',
+            'PALEYELLOW': 'pale yellow',
+            'GOLD': 'gold', 
+            'HEATHERBLUE': 'heather-blue', 
+            'COPPER': 'copper', 
+            'SAGE': 'sage', 
+            'COBALT': 'cobalt', 
+            'SUNLITICE': 'sunlit ice', 
+            'GREENYELLOW': 'green-yellow', 
+            'BRONZE': 'bronze', 
+            'SILVER': 'silver'
         }
 
         # Start with determining the base color name
         color_name = str(cat.pelt.colour).lower()
         if color_name in renamed_colors:
             color_name = renamed_colors[color_name]
+        eye_color = eye_colour_strings[cat.pelt.eye_colour]
+        if cat.pelt.eye_colour2 is not None:
+            eye_color2 = eye_colour_strings[cat.pelt.eye_colour2]
+        else:
+            eye_color2 = None
+        if cat.melanistic:
+            eyecolor_name = "deep brown eyes"
+        elif cat.albinistic:
+            eyecolor_name = "albino red eyes"
+        elif eye_color2 is not None:
+            eyecolor_name = f"one {eye_color} eye and one {eye_color2} eye"
+        else:
+            eyecolor_name = f"{eye_color} eyes"
         
         # Replace "white" with "pale" if the cat is white
         if cat.pelt.name not in ["SingleColour", "TwoColour", "Tortie", "Calico"] and color_name == "white":
@@ -1051,6 +1091,11 @@ class Pelt():
         if "white and white" in color_name:
             color_name = color_name.replace("white and white", "white")
 
+        if cat.albinistic:
+            color_name = "albinistic"
+        elif cat.melanistic:
+            color_name = "melanistic"
+
         # Now it's time for gender
         if cat.genderalign in ["female", "trans female"]:
             color_name = f"{color_name} she-cat"
@@ -1073,7 +1118,8 @@ class Pelt():
             }
 
             additional_details = []
-            if cat.pelt.vitiligo:
+            additional_details.insert(0, eyecolor_name)
+            if cat.pelt.vitiligo and not cat.melanistic and not cat.albinistic:
                 additional_details.append("vitiligo")
             for scar in cat.pelt.scars:
                 if scar in scar_details and scar_details[scar] not in additional_details:
@@ -1089,7 +1135,9 @@ class Pelt():
                 color_name = f"scarred {color_name}"
             if cat.pelt.length == "long":
                 color_name = f"long-furred {color_name}"
-
+            if len(cat.pelt.scars) >= 3 and cat.pelt.length == "long":
+                color_name = f"scarred long-furred {color_name}"
+        
         return color_name
     
     def get_sprites_name(self):

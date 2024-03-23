@@ -105,7 +105,7 @@ def json_load():
                 tint=cat["tint"] if "tint" in cat else "none",
                 scars=cat["scars"] if "scars" in cat else [],
                 accessory=cat["accessory"],
-                opacity=cat["opacity"] if "opacity" in cat else 100
+                opacity=cat["opacity"] if "opacity" in cat else 100,
             )
             
             # Runs a bunch of apperence-related convertion of old stuff. 
@@ -144,6 +144,8 @@ def json_load():
             new_cat.no_mates = cat["no_mates"] if "no_mates" in cat else False
             new_cat.no_retire = cat["no_retire"] if "no_retire" in cat else False
             new_cat.exiled = cat["exiled"]
+            new_cat.albinistic = cat["albinistic"] if "albinistic" in cat else False
+            new_cat.melanistic = cat["melanistic"] if "melanistic" in cat else False
             
             if "skill_dict" in cat:
                 new_cat.skills = CatSkills(cat["skill_dict"])

@@ -196,6 +196,12 @@ class SkillPath(Enum):
         "calming presence",
         "reader of emotions"
     )
+    FORAGING = (
+        "likes plants",
+        "flower picker",
+        "frequent forager",
+        "master of plants"
+    )
     
     @staticmethod
     def get_random(exclude:list=()):
@@ -266,7 +272,8 @@ class Skill():
         SkillPath.ALERT: "alertness",
         SkillPath.MANIPULATION: "manipulating",
         SkillPath.STEALTH: "sneaking",
-        SkillPath.EMPATHY: "empathizing"
+        SkillPath.EMPATHY: "empathizing",
+        SkillPath.FORAGING: "foraging"
     }
     
     
@@ -407,12 +414,13 @@ class CatSkills:
         SkillPath.TRACKER: SkillTypeFlag.AGILE | SkillTypeFlag.OBSERVANT,
         SkillPath.LEADER: SkillTypeFlag.SOCIAL | SkillTypeFlag.SMART,
         SkillPath.MEMORY: SkillTypeFlag.SMART,
-        SkillPath.TUNNELER: SkillTypeFlag.STRONG,
+        SkillPath.TUNNELER: SkillTypeFlag.STRONG | SkillTypeFlag.AGILE,
         SkillPath.AGILE: SkillTypeFlag.AGILE,
         SkillPath.ALERT: SkillTypeFlag.OBSERVANT | SkillTypeFlag.SMART,
         SkillPath.MANIPULATION: SkillTypeFlag.SMART | SkillTypeFlag.SOCIAL,
         SkillPath.STEALTH: SkillTypeFlag.AGILE | SkillTypeFlag.OBSERVANT,
-        SkillPath.EMPATHY: SkillTypeFlag.OBSERVANT | SkillTypeFlag.SOCIAL
+        SkillPath.EMPATHY: SkillTypeFlag.OBSERVANT | SkillTypeFlag.SOCIAL,
+        SkillPath.FORAGING: SkillTypeFlag.OBSERVANT
     }
     # pylint: enable=unsupported-binary-operation
     

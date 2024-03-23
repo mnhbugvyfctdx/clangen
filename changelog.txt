@@ -1,8 +1,8 @@
-<strong>v0.2</strong>
+<strong>v0.0.2</strong>
 - Toggle for showing years in clan settings
 - New skills and personalities, including the removed ones
 - Leader is more likely to choose a cat they like as the deputy, instead of completely random
 
-<strong>v0.1</strong>
+<strong>v0.0.1</strong>
 - The leader can choose when kits become apprentices, toggleable in clan settings
 - New patrols

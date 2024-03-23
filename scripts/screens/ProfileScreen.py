@@ -674,13 +674,19 @@ class ProfileScreen(Screens):
         output += "\n"
 
         # EYE COLOR
-        output += 'eyes: ' + str(the_cat.describe_eyes())
+        output += 'eyes: '
+        if the_cat.albinistic:
+            output += 'albino red'
+        elif the_cat.melanistic:
+            output += 'deep brown'
+        else:
+            output += str(the_cat.describe_eyes())
         # NEWLINE ----------
         output += "\n"
 
         # PELT TYPE
         if the_cat.albinistic == True:
-            output += 'pelt: ' + 'albino'
+            output += 'pelt: ' + 'albinistic'
         elif the_cat.melanistic == True:
             output += 'pelt: ' + 'melanistic'
         else:

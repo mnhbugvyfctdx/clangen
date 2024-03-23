@@ -316,8 +316,8 @@ class Cat():
             self.albinistic = Pelt.generate_albinism(self)
             self.melanistic = Pelt.generate_melanism(self)
             if self.melanistic is True and self.albinistic is True:
-                asdfv = randint(1, 2)
-                if asdfv == 1:
+                idk = randint(1, 2)
+                if idk == 1:
                     self.melanistic = False
                 else:
                     self.albinistic = False

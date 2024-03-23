@@ -1292,11 +1292,23 @@ def generate_sprite(cat, life_state=None, scars_hidden=False, acc_hidden=False, 
         if cat.pelt.vitiligo:
             new_sprite.blit(sprites.sprites['white' + cat.pelt.vitiligo + cat_sprite], (0, 0))
 
+
         # draw eyes & scars1
         eyes = sprites.sprites['eyes' + cat.pelt.eye_colour + cat_sprite].copy()
-        if cat.pelt.eye_colour2 != None:
+        if cat.pelt.eye_colour2 is not None:
             eyes.blit(sprites.sprites['eyes2' + cat.pelt.eye_colour2 + cat_sprite], (0, 0))
         new_sprite.blit(eyes, (0, 0))
+
+        # albinism/melanism, layers over the pelt and eyes but does not erase.
+        if cat.albinistic:
+            new_sprite.blit(sprites.sprites['albinistic' + cat_sprite], (0, 0))
+            eyes = sprites.sprites['eyes' + choice(Pelt.albino_eyes) + cat_sprite].copy()
+            new_sprite.blit(eyes, (0, 0))
+        if cat.melanistic:
+            new_sprite.blit(sprites.sprites['melanistic' + cat_sprite], (0, 0))
+            eyes = sprites.sprites['eyes' + 'BRONZE' + cat_sprite].copy() # bronze as placeholder for now
+            new_sprite.blit(eyes, (0, 0))
+
 
         if not scars_hidden:
             for scar in cat.pelt.scars:
