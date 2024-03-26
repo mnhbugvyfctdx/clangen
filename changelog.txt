@@ -1,3 +1,7 @@
+<strong>v0.0.3</strong>
+- New genders
+- Orientation
+
 <strong>v0.0.2</strong>
 - Leader is more likely to choose a cat they like as the deputy, instead of completely random
 - Toggle for showing years in clan settings
