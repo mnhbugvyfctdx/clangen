@@ -147,7 +147,8 @@ def get_free_possible_mates(cat):
             continue
 
         if inter_cat.is_potential_mate(cat, for_love_interest=True):
-            cats.append(inter_cat)
+            if (inter_cat.gendertype in cat.likes) and (cat.gendertype in inter_cat.likes):
+                cats.append(inter_cat)
     return cats
 
 

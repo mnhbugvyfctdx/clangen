@@ -194,6 +194,16 @@ class Pregnancy_Events():
         # additional save for no kit setting
         if (cat and cat.no_kits) or (other_cat and other_cat.no_kits):
             return
+        
+        # for each ace cat, 50/50 chance of proceeding w/ pregnancy
+        if cat.acespec == "asexual":
+            flip = randint(0, 1)
+            if flip == 1:
+                return
+        if other_cat and other_cat.acespec == "asexual":
+            flip = randint(0, 1)
+            if flip == 1:
+                return
 
         if clan.clan_settings['same sex birth']:
             # 50/50 for single cats to get pregnant or just bring a litter back
@@ -504,6 +514,16 @@ class Pregnancy_Events():
         if not Pregnancy_Events.check_if_can_have_kits(second_parent, single_parentage, allow_affair):
             return False, False
 
+        # for each ace cat, 50/50 chance of allowing bio kits, if fail then adoption
+        if cat.acespec == "asexual":
+            flip = randint(0, 1)
+            if flip == 1:
+                return True, True
+        if second_parent.acespec == "asexual":
+            flip = randint(0, 1)
+            if flip == 1:
+                return True, True
+
         # Check to see if the pair can have kits.
         if cat.gender == second_parent.gender:
             if same_sex_birth:
@@ -528,6 +548,7 @@ class Pregnancy_Events():
         samesex = clan.clan_settings['same sex birth']
         allow_affair = clan.clan_settings['affair']
         mate = None
+
 
         # randomly select a mate of given cat
         if len(cat.mate) > 0:
@@ -579,7 +600,7 @@ class Pregnancy_Events():
             possible_affair_partners = [i for i in Cat.all_cats_list if 
                                         i.is_potential_mate(cat, for_love_interest=True) 
                                         and (samesex or i.gender != cat.gender) 
-                                        and i.ID not in cat.mate]
+                                        and i.ID not in cat.mate and (i.gendertype in cat.likes)]
             if special_affair:
                 possible_affair_partners = [c for c in possible_affair_partners if len(c.mate) <1]
 
@@ -620,13 +641,15 @@ class Pregnancy_Events():
             chance_love_affair = Pregnancy_Events.get_love_affair_chance(mate_relation, highest_romantic_relation)
             if not chance_love_affair or not int(random.random() * chance_love_affair):
                 if samesex or cat.gender != highest_romantic_relation.cat_to.gender:
-                    return highest_romantic_relation.cat_to
+                    if highest_romantic_relation.cat_to.gendertype in cat.likes:
+                        return highest_romantic_relation.cat_to
         elif highest_romantic_relation:
             # Love affair change if the cat doesn't have a mate:
             chance_love_affair = Pregnancy_Events.get_unmated_love_affair_chance(highest_romantic_relation)
             if not chance_love_affair or not int(random.random() * chance_love_affair):
                 if samesex or cat.gender != highest_romantic_relation.cat_to.gender:
-                    return highest_romantic_relation.cat_to
+                    if highest_romantic_relation.cat_to.gendertype in cat.likes:
+                        return highest_romantic_relation.cat_to
 
         return None
 

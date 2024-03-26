@@ -131,6 +131,9 @@ class Romantic_Events():
         """
         if cat_from.ID == cat_to.ID:
             return False
+        
+        if (cat_from.gendertype not in cat_to.likes) or (cat_to.gendertype not in cat_from.likes) or cat_from.arospec == "aromantic" or cat_to.arospec == "aromantic":
+            return False
 
         relevant_dict = deepcopy(Romantic_Events.ROMANTIC_INTERACTIONS)
         if cat_to.ID in cat_from.mate and not cat_to.dead:
@@ -408,13 +411,22 @@ class Romantic_Events():
         highest_romantic_relation = get_highest_romantic_relation(rel_list, exclude_mate=True)
         if not highest_romantic_relation:
             return False
+        
+        if cat_from.arospec == "aromantic":
+            return False
 
-        condition = game.config["mates"]["confession"]["make_confession"]
+        if cat_from.arospec == "demiromantic" or cat_from.acespec == "demisexual":
+            condition = game.config["mates"]["confession"]["make_confession_demi"]
+        else:
+            condition = game.config["mates"]["confession"]["make_confession"]
         if not Romantic_Events.relationship_fulfill_condition(highest_romantic_relation, condition):
             return False
 
         cat_to = highest_romantic_relation.cat_to
         if not cat_to.is_potential_mate(cat_from) or not cat_from.is_potential_mate(cat_to):
+            return False
+        
+        if cat_to.gendertype not in cat_from.likes:
             return False
 
         alive_inclan_from_mates = [mate for mate in cat_from.mate if not cat_from.fetch_cat(mate).dead and not cat_from.fetch_cat(mate).outside]
@@ -425,13 +437,26 @@ class Romantic_Events():
             return False
 
         become_mate = False
-        condition = game.config["mates"]["confession"]["accept_confession"]
+        if cat_to.arospec and cat_to.arospec == "demiromantic" or (cat_to.acespec and cat_to.acespec == "demisexual"):
+            condition = game.config["mates"]["confession"]["accept_confession_demi"]
+        else:
+            condition = game.config["mates"]["confession"]["accept_confession"]
         rel_to_check = highest_romantic_relation.opposite_relationship
         if not rel_to_check:
             highest_romantic_relation.link_relationship()
             rel_to_check = highest_romantic_relation.opposite_relationship
         
-        if Romantic_Events.relationship_fulfill_condition(rel_to_check, condition):
+        if cat_to.arospec == "aromantic":
+            mate_string = Romantic_Events.get_mate_string("aro_reject", poly, cat_from, cat_to)
+            cat_from.relationships[cat_to.ID].romantic_love -= 10
+            cat_to.relationships[cat_from.ID].comfortable -= 10
+            become_mate = False
+        elif (cat_from.gendertype not in cat_to.likes) or (cat_to.gendertype not in cat_from.likes):
+            mate_string = Romantic_Events.get_mate_string("incomp_reject", poly, cat_from, cat_to)
+            cat_from.relationships[cat_to.ID].romantic_love -= 10
+            cat_to.relationships[cat_from.ID].comfortable -= 10
+            become_mate = False
+        elif Romantic_Events.relationship_fulfill_condition(rel_to_check, condition):
             become_mate = True
             mate_string = Romantic_Events.get_mate_string("high_romantic", poly, cat_from, cat_to)
         # second acceptance chance if the romantic is high enough
@@ -486,6 +511,11 @@ class Romantic_Events():
         # Moving on, not breakups, occur when one mate is dead or outside. 
         if cat_from.dead or cat_from.outside or cat_to.dead or cat_to.outside:
             return False
+        
+        # auto breakup if incompatible
+        if game.settings["allow breakup"]:
+            if cat_from.gendertype not in cat_to.likes or cat_to.gendertype not in cat_from.likes:
+                return True
 
         chance_number = Romantic_Events.get_breakup_chance(cat_from, cat_to)
         if chance_number == 0:
@@ -707,7 +737,10 @@ class Romantic_Events():
     @staticmethod
     def get_mate_string(key, poly, cat_from, cat_to):
         """Returns the mate string with the certain key, cats and poly."""
-        if not poly:
+        # special rejects if incompatible
+        if key in ("aro_reject", "incomp_reject"):
+            return choice(Romantic_Events.MATE_DICTS[key])
+        elif not poly:
             return choice(Romantic_Events.MATE_DICTS[key])
         else:
             poly_key = ""

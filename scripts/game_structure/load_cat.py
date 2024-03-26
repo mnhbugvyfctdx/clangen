@@ -121,11 +121,71 @@ def json_load():
             new_cat.adoptive_parents = cat["adoptive_parents"] if "adoptive_parents" in cat else []
             
             new_cat.genderalign = cat["gender_align"]
+            new_cat.acespec = cat["acespec"] if "acespec" in cat else None
+            new_cat.arospec = cat["arospec"] if "arospec" in cat else None
+            new_cat.likespec = cat["likespec"] if "likespec" in cat else "straight"
+            if "likes" not in cat:
+                if new_cat.likespec == "straight":
+                    if new_cat.genderalign in ("male", "trans male", "genderfaun", "demiboy"):
+                        new_cat.likes = tuple("feminine")
+                    elif new_cat.genderalign in ("female", "trans female", "genderfae", "demigirl"):
+                        new_cat.likes = tuple("masculine")
             new_cat.backstory = cat["backstory"] if "backstory" in cat else None
             if new_cat.backstory in BACKSTORIES["conversion"]:
                 new_cat.backstory = BACKSTORIES["conversion"][new_cat.backstory]
             new_cat.birth_cooldown = cat["birth_cooldown"] if "birth_cooldown" in cat else 0
             new_cat.moons = cat["moons"]
+
+            # setting some identity stuff, works fine if redone every load
+            gendertypes = (
+                "feminine", "masculine", "genderless"
+            )
+            if new_cat.genderalign in ["female", "trans female", "demigirl", "genderfae"]:
+                new_cat.gendertype = "feminine"
+            elif new_cat.genderalign in ["male", "trans male", "demiboy", "genderfaun"]:
+                new_cat.gendertype = "masculine"
+            else:
+                new_cat.gendertype = "genderless"
+            
+            if new_cat.arospec == "aromantic":
+                new_cat.likes = None
+                new_cat.likespec = None
+            elif new_cat.likespec in ["pansexual", "panromantic", "omnisexual", "omniromantic"] and new_cat.likes is None:
+                new_cat.likes = []
+                new_cat.likes.append("feminine", "masculine", "genderless")
+            elif new_cat.likespec in ["bisexual", "biromantic"] and new_cat.likes is None:
+                new_cat.likes = []
+                choice1 = choice(gendertypes)
+                choice2 = choice(gendertypes)
+                if choice1 == choice2:
+                    choice1 = choice(gendertypes)
+                    if choice1 == choice2:
+                        choice2 = choice(gendertypes)
+                        if choice1 == choice2:
+                            choice1 = "feminine"
+                            choice2 = "masculine"
+                new_cat.likes.append(str(choice1), str(choice2))
+            elif new_cat.likespec == "lesbian" and new_cat.likes is None:
+                new_cat.likes = []
+                new_cat.likes.append("feminine")
+            elif new_cat.likespec == "gay" and new_cat.likes is None:
+                new_cat.likes = []
+                new_cat.likes.append("masculine")
+
+            elif new_cat.likespec == "straight" and new_cat.likes is None:
+                new_cat.likes = []
+                if new_cat.genderalign in ["female", "trans female", "demigirl", "genderfae"]:
+                    new_cat.likes.append("masculine")
+                elif new_cat.genderalign in ["male", "trans male", "demiboy", "genderfaun"]:
+                    new_cat.likes.append('feminine')
+                else:
+                    if new_cat.gender == "female":
+                        new_cat.likes.append("masculine")
+                    elif new_cat.gender == "male":
+                        new_cat.likes.append("feminine")
+                    else:
+                        print(f"Error with {new_cat.name} (ID {new_cat.ID}), no gender found")
+                        new_cat.likes = None
             
             
             if "facets" in cat:

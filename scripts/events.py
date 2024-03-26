@@ -282,7 +282,7 @@ class Events:
                                 
                 runaway_chance = randint(1,100000) # 1 to 100,000 to simulate 000.001 to 100.000, because I don't think i can randint non-whole numbers
 
-                print(f"{cat.name}'s runaway chance: {runaway_chances * .001}")
+                print(f"{cat.name}'s runaway chance: {runaway_chances * .001}%")
 
                 if cat.status not in ('kitten', 'newborn'):
                       # min chance is 0.1%
@@ -332,20 +332,22 @@ class Events:
             change_chance = randint(1,100)
             personalitybased = randint(1,100)
             if change_chance > 94 or game.app_age not in (2,3,4,5,6,7,8,9,10,11):
-                if game.clan.leader.personality.trait in ('bloodthirsty', 'vengeful', 'cold'):
-                    self.new_app_age = randint(3,5)
+                if game.clan.leader.personality.trait in ('bloodthirsty', 'vengeful', 'cold', 'hot-headed'):
+                    new_app_age = randint(3,5)
                 elif game.clan.leader.personality.trait in ('strict', 'righteous', 'faithful', 'loyal'):
-                   self.new_app_age = randint(5,7)
-                elif game.clan.leader.personality.trait in ('loving', 'compassionate', 'childish'):
-                    self.new_app_age = randint(7,9)
+                   new_app_age = randint(5,7)
+                elif game.clan.leader.personality.trait in ('loving', 'compassionate', 'childish', 'empathetic'):
+                    new_app_age = randint(7,9)
                   # troublesome and strange can be basically any age, and the only way to get it below 3 or above 9
                 elif game.clan.leader.personality.trait in ('troublesome', 'strange'):
-                    self.new_app_age = randint(2,11)
+                    new_app_age = randint(2,11)
                 elif personalitybased > 80:
-                    self.new_app_age = int(6)
+                    new_app_age = int(6)
+                else:
+                    new_app_age = randint(5,7)
 
-                if self.new_app_age != game.app_age: # so the leader isn't like "the old app age was 6... and now it's 6"
-                    game.app_age = self.new_app_age
+                if new_app_age != game.app_age: # so the leader isn't like "the old app age was 6... and now it's 6"
+                    game.app_age = new_app_age
                     if game.app_age == 6:
                         app_age_event = str(f"{game.clan.leader.name} steps in front of the clan, declaring the apprenticeship age to be {game.app_age} moons old - the way it should be, according to the Warrior Code.")
                     elif game.app_age < 5:
@@ -919,6 +921,7 @@ class Events:
                 return
 
         self.coming_out(cat)
+        self.coming_out_orient(cat)
         Pregnancy_Events.handle_having_kits(cat, clan=game.clan)
         # Stop the timeskip if the cat died in childbirth
         if cat.dead:
@@ -1187,18 +1190,18 @@ class Events:
                     ]:
                         chance = int(chance * 1.5)
                     if cat.skills.primary.path in [
-                        SkillPath.HEALER, SkillPath.STAR, SkillPath.DREAM, SkillPath.GHOST, SkillPath.PROPHET, SkillPath.OMEN
+                        SkillPath.HEALER, SkillPath.STAR, SkillPath.DREAM, SkillPath.GHOST, SkillPath.PROPHET, SkillPath.OMEN, SkillPath.FORAGING
                     ]:
                         chance = int(chance / 1.5)
-                    if cat.skills.secondary.path in [
-                        SkillPath.HEALER, SkillPath.STAR, SkillPath.DREAM, SkillPath.GHOST, SkillPath.PROPHET, SkillPath.OMEN
+                    if cat.skills.secondary and cat.skills.secondary.path in [
+                        SkillPath.HEALER, SkillPath.STAR, SkillPath.DREAM, SkillPath.GHOST, SkillPath.PROPHET, SkillPath.OMEN, SkillPath.FORAGING
                     ]:
                         chance = int(chance / 1.5)
                     if cat.skills.primary.path in [
                         SkillPath.FIGHTER, SkillPath.DARK, SkillPath.HUNTER
                     ]:
                         chance = int(chance * 1.5)
-                    if cat.skills.secondary.path in [
+                    if cat.skills.secondary and cat.skills.secondary.path in [
                         SkillPath.FIGHTER, SkillPath.DARK, SkillPath.HUNTER
                     ]:
                         chance = int(chance * 1.5)
@@ -1232,7 +1235,7 @@ class Events:
                             SkillPath.MEDIATOR, SkillPath.SPEAKER, SkillPath.INSIGHTFUL, SkillPath.CLEVER, SkillPath.CLAIRVOYANT, SkillPath.MANIPULATION, SkillPath.EMPATHY
                         ]:
                             chance = int(chance / 1.5)
-                        if cat.skills.secondary.path in [
+                        if cat.skills.secondary and cat.skills.secondary.path in [
                             SkillPath.MEDIATOR, SkillPath.SPEAKER, SkillPath.INSIGHTFUL, SkillPath.CLEVER, SkillPath.CLAIRVOYANT, SkillPath.MANIPULATION, SkillPath.EMPATHY
                         ]:
                             chance = int(chance / 1.5)
@@ -1240,7 +1243,7 @@ class Events:
                             SkillPath.FIGHTER, SkillPath.HUNTER
                         ]:
                             chance = int(chance * 1.5)
-                        if cat.skills.secondary.path in [
+                        if cat.skills.secondary and cat.skills.secondary.path in [
                             SkillPath.FIGHTER, SkillPath.HUNTER
                         ]:
                             chance = int(chance * 1.5)
@@ -1733,7 +1736,7 @@ class Events:
                 war=game.clan.war.get("at_war", False),
                 enemy_clan=enemy_clan,
                 alive_kits=get_alive_kits(Cat))
-            Relation_Events.welcome_new_cats(new_cats)
+            Relation_Events.welcome_new_cats, (new_cats)
 
     def other_interactions(self, cat):
         """
@@ -2170,18 +2173,21 @@ class Events:
 
     def coming_out(self, cat):
         """turnin' the kitties trans..."""
+        genders = (
+            "demigirl", "demiboy", "genderfae", "genderfaun", "genderqueer", "agender", "genderfluid", "bigender"
+        )
         if cat.genderalign == cat.gender:
             if cat.moons < 6:
                 return
 
             involved_cats = [cat.ID]
             if cat.age == 'adolescent':
-                transing_chance = random.getrandbits(8)  # 2/256
+                transing_chance = random.getrandbits(7)
             elif cat.age == 'young adult':
-                transing_chance = random.getrandbits(9)  # 2/512
+                transing_chance = random.getrandbits(8)
             else:
                 # adult, senior adult, elder
-                transing_chance = random.getrandbits(10)  # 2/1028
+                transing_chance = random.getrandbits(9) 
 
             if transing_chance:
                 # transing_chance != 0, no trans kitties today...    L
@@ -2195,7 +2201,7 @@ class Events:
                     cat.genderalign = "trans male"
                     # cat.pronouns = [cat.default_pronouns[2].copy()]
             else:
-                cat.genderalign = "nonbinary"
+                cat.genderalign = choice(genders)
                 # cat.pronouns = [cat.default_pronouns[0].copy()]
 
             if cat.gender == 'male':
@@ -2206,6 +2212,164 @@ class Events:
             game.cur_events_list.append(
                 Single_Event(text, "misc", involved_cats))
             # game.misc_events_list.append(text)
+    
+    def coming_out_orient(self, cat):
+        """the cats shall be gay... maybe"""
+
+        # lists of possible orientations, lesbian and gay will get replaced if on wrong gender
+        likespecs = (
+            "bi", "omni", "pan", "lesbian", "gay"
+        )
+        aroacespecs = (
+            "a", "demi"
+        )
+
+        # no coming out again if you've already come out about everything, or if you're a baby
+        if cat.arospec is None or cat.acespec is None or cat.likespec == "straight":
+            if cat.moons < 6 or (cat.likespec != "straight" and cat.arospec is not None and cat.acespec is not None):
+                return
+            
+            if not game.settings["allow orient"]:
+                return
+            
+            # also no more coming out if aroace
+            if cat.arospec == "aromantic" and cat.acespec == "asexual":
+                return
+
+            involved_cats = [cat.ID]
+            if cat.age == 'adolescent':
+                orient_chance = random.getrandbits(6)
+            elif cat.age == 'young adult':
+                orient_chance = random.getrandbits(7) 
+            else:
+                # adult, senior adult, elder
+                orient_chance = random.getrandbits(8)  
+
+            if orient_chance:
+                return
+            
+            # stores old orientation for the event str
+            old_likespec = str(cat.likespec if cat.likespec else "aroace")
+            old_arospec = str(cat.arospec if cat.arospec else "straight")
+            old_acespec = str(cat.acespec if cat.acespec else "straight")
+
+            # time for super complex stuff to determine what they're changing bc of the three different variables
+            possible_likechange = False
+            possible_acechange = False
+            possible_arochange = False
+            if cat.likespec == "straight":
+                possible_likechange = True
+            if cat.acespec is None:
+                possible_acechange = True
+            if cat.arospec is None:
+                possible_arochange = True
+
+            # if a cat that can't change orientation managed to get here
+            if possible_likechange is False and possible_acechange is False and possible_arochange is False:
+                return
+
+            # more likely to change their likespec
+            arochanged = False
+            acechanged = False
+            likechanged = False
+            if possible_arochange is True:
+                arochange = randint(1, 2)
+                if arochange != 2:
+                    cat.acespec = str(choice(aroacespecs))
+                    cat.acespec += "romantic"
+                    arochanged = True
+            if possible_acechange is True:
+                acechange = randint(1, 2)
+                if acechange != 2:
+                    cat.acespec = str(choice(aroacespecs))
+                    cat.acespec += "sexual"
+                    acechanged = True
+            if possible_likechange is True:
+                likechange = randint(1, 3)
+                if likechange != 3 or (arochange == 2 and acechange == 2):
+                    cat.likespec = str(choice(likespecs))
+                    likechanged = True
+                    if cat.likespec not in ("lesbian", "gay"):
+                        cat.likespec += "sexual"
+            
+            # no likespec if aroace
+            if (cat.acespec and cat.acespec == "asexual") and (cat.arospec and cat.arospec == "aromantic"):
+                cat.likespec = None
+            
+            # changing to romanticity if needed
+            if cat.acespec:
+                if cat.likespec:
+                    if cat.likespec.endswith("sexual"):
+                        cat.likespec = cat.likespec[: -len("sexual")]
+                        if cat.likespec not in ("lesbian", "gay"):
+                            cat.likespec += "romantic"
+
+            if cat.likespec == "gay" and (cat.genderalign not in ("male", "trans male", "demiboy", "genderfaun") and cat.gender != "male") and cat.genderalign in ("female", "trans female", "demigirl", "genderfae"):
+                cat.likespec = "lesbian"
+            if cat.likespec == "lesbian" and (cat.genderalign not in ("female", "trans female", "demigirl", "genderfae") and cat.gender != "male") and cat.genderalign in ("male", "trans male", "demiboy", "genderfaun"):
+                cat.likespec = "gay"
+
+            if likechanged:
+                Events.set_likes(self, cat)
+
+            orientstr = []
+
+            if arochanged:
+                orientstr.append(old_arospec)
+            if acechanged:
+                orientstr.append(old_acespec)
+            if likechanged:
+                orientstr.append(old_likespec)
+            orientstr = [item for i, item in enumerate(orientstr) if item not in orientstr[:i]]
+            orientstr = " ".join(orientstr)
+
+            text = f"{cat.name} has realized that the {orientstr} label doesn't quite describe how they feel anymore."
+            game.cur_events_list.append(
+                Single_Event(text, "misc", involved_cats))
+
+    def set_likes(self, cat):
+        """ Sets a cat's likes based on their current likespec. Will override existing likes """
+
+        gendertypes = (
+            "feminine", "masculine", "genderless"
+        )
+
+        if cat.likespec in ["pansexual", "panromantic", "omnisexual", "omniromantic"]:
+            cat.likes = []
+            cat.likes.append("feminine", "masculine", "genderless")
+        elif cat.likespec in ["bisexual", "biromantic"]:
+            cat.likes = []
+            choice1 = choice(gendertypes)
+            choice2 = choice(gendertypes)
+            if choice1 == choice2:
+                choice1 = choice(gendertypes)
+                if choice1 == choice2:
+                    choice2 = choice(gendertypes)
+                    if choice1 == choice2:
+                        choice1 = "feminine"
+                        choice2 = "masculine"
+            cat.likes.append(str(choice1), str(choice2))
+        elif cat.likespec == "lesbian":
+            cat.likes = []
+            cat.likes.append("feminine")
+        elif cat.likespec == "gay":
+            cat.likes = []
+            cat.likes.append("masculine")
+
+        elif cat.likespec == "straight":
+            cat.likes = []
+            if cat.genderalign in ["female", "trans female", "demigirl", "genderfae"]:
+                cat.likes.append("masculine")
+            elif cat.genderalign in ["male", "trans male", "demiboy", "genderfaun"]:
+                cat.likes.append('feminine')
+            else:
+                if cat.gender == "female":
+                    cat.likes.append("masculine")
+                elif cat.gender == "male":
+                    cat.likes.append("feminine")
+                else:
+                    print(f"Error with {cat.name} (ID: {cat.ID}), no gender found")
+                    cat.likes = None
 
     def check_and_promote_leader(self):
         """ Checks if a new leader need to be promoted, and promotes them, if needed.  """
@@ -2380,7 +2544,6 @@ class Events:
                             Single_Event(
                                 "There are no cats fit to become deputy. ",
                                 "ceremony"))
-                game.clan.deputy.ID = random_cat.ID
                 random_cat.status = "deputy"
 
                 game.cur_events_list.append(

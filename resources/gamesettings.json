@@ -43,27 +43,47 @@
         ],
         "discord": [
             "Enable Discord integration",
-            "Discord will show info about your Clan, including your Clan name",
+            "Discord will show info about your Clan, including your Clan name.",
             false
         ],
         "check_for_updates": [
             "Check for updates",
-            "Automatically checks for updates on startup",
+            "Automatically checks for updates on startup.",
             true
         ],
         "show_changelog": [
             "Display changelog on startup",
-            "Shows the changelog of the latest release on startup",
+            "Shows the changelog of the latest release on startup.",
             true
         ],
         "special_dates": [
             "Allow special date events",
-            "Certain changes may be made to the game on special days such as April Fools",
+            "Certain changes may be made to the game on special days such as April Fools.",
             true
         ],
         "random relation": [
             "Randomize relationship values when creating Clan",
             "Clan founder cats will start the game with established relationships.",
+            true
+        ],
+        "allow nb": [
+            "Allow cats to choose to be nonbinary or trans",
+            "Allow cats to have a chance to become nonbinary or trans on a moonskip.",
+            true
+        ],
+        "allow other": [
+            "Allow cats to choose to be any gender",
+            "Allow cats to have a chance to become all sorts of genders on a moonskip.",
+            true
+        ],
+        "allow orient": [
+            "Allow cats to choose to be different sexualities",
+            "Allow cats to have a chance to become a different sexuality on a moonskip",
+            true
+        ],
+        "allow breakup": [
+            "Allow mates to break up due to sexuality",
+            "Allow mates to break up if their sexualities become incompatible with their relationship",
             true
         ]
     },

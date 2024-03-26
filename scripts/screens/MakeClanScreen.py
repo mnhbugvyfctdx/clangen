@@ -711,6 +711,14 @@ class MakeClanScreen(Screens):
     def refresh_selected_cat_info(self, selected=None):
         # SELECTED CAT INFO
         if selected is not None:
+            if self.selected_cat.arospec is None and selected.acespec is None:
+                sexualitystr = f"{selected.likespec}"
+            elif self.selected_cat.acespec is None:
+                sexualitystr = f"{selected.arospec} {selected.likespec}"
+            elif self.selected_cat.arospec is None:
+                sexualitystr = f"{selected.acespec} {selected.likespec}"
+            else:
+                sexualitystr = f"{selected.arospec} {selected.acespec} {selected.likespec}"
 
             if self.sub_screen == 'choose leader':
                 self.elements['cat_name'].set_text(str(selected.name) +
@@ -720,7 +728,7 @@ class MakeClanScreen(Screens):
             else:
                 self.elements['cat_name'].set_text(str(selected.name))
             self.elements['cat_name'].show()
-            self.elements['cat_info'].set_text(selected.gender + "\n" +
+            self.elements['cat_info'].set_text(selected.genderalign + "\n" + sexualitystr + "\n" +
                                                str(selected.age + "\n" +
                                                    str(selected.personality.trait) + "\n" +
                                                    str(selected.skills.skill_string())))

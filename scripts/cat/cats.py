@@ -114,6 +114,11 @@ class Cat():
     def __init__(self,
                  prefix=None,
                  gender=None,
+                 acespec=None,
+                 arospec=None,
+                 likespec=None,
+                 acetype=None,
+                 likes=None,
                  status="newborn",
                  backstory="clanborn",
                  parent1=None,
@@ -201,6 +206,12 @@ class Cat():
         self.dead_for = 0  # moons
         self.thought = ''
         self.genderalign = None
+        self.gendertype = None
+        self.acespec = acespec
+        self.arospec = arospec
+        self.likespec = likespec
+        self.acetype = acetype
+        self.likes = likes
         self.birth_cooldown = 0
         self.illnesses = {}
         self.injuries = {}
@@ -283,23 +294,35 @@ class Cat():
             self.gender = choice(["female", "male"])
         self.g_tag = self.gender_tags[self.gender]
 
+        if self.likespec is None and self.acespec is None and self.arospec is None:
+            self.likespec = "straight"
+
         # These things should only run when generating a new cat, rather than loading one in.
         if not loading_cat:
             # trans cat chances
-            trans_chance = randint(0, 50)
-            nb_chance = randint(0, 75)
-            if self.gender == "female" and not self.status in ['newborn', 'kitten']:
-                if trans_chance == 1:
-                    self.genderalign = "trans male"
-                elif nb_chance == 1:
-                    self.genderalign = "nonbinary"
-                else:
-                    self.genderalign = self.gender
-            elif self.gender == "male" and not self.status in ['newborn', 'kitten']:
-                if trans_chance == 1:
-                    self.genderalign = "trans female"
-                elif nb_chance == 1:
-                    self.genderalign = "nonbinary"
+            trans_chance = randint(0, 40)
+            nb_chance = randint(0, 55)
+            if game.settings["allow other"]:
+                other_chance = randint(0, 75)
+            else:
+                other_chance = 0
+            if game.settings["allow nb"]:
+                if self.gender == "female" and not self.status in ['newborn', 'kitten']:
+                    if trans_chance == 1:
+                        self.genderalign = "trans male"
+                    elif nb_chance == 1:
+                        self.genderalign = "nonbinary"
+                    else:
+                        self.genderalign = self.gender
+                elif self.gender == "male" and not self.status in ['newborn', 'kitten']:
+                    if trans_chance == 1:
+                        self.genderalign = "trans female"
+                    elif nb_chance == 1:
+                        self.genderalign = "nonbinary"
+                    else:
+                        self.genderalign = self.gender
+                elif other_chance == 1:
+                        self.genderalign = choice(["demiboy", "demigirl", "genderfae", "genderfaun", "genderfluid", "agender", "genderqueer", "bigender"])
                 else:
                     self.genderalign = self.gender
             else:
@@ -309,6 +332,53 @@ class Cat():
                 self.pronouns = [self.default_pronouns[1].copy()]
             elif self.genderalign in ["male", "trans male"]:
                 self.pronouns = [self.default_pronouns[2].copy()]"""
+            
+            # sexuality
+            if game.settings["allow orient"] and self.status not in ("kitten", "newborn"):
+                # ace spec
+                chances_acespec = randint(1, 15)
+                if chances_acespec == 1:
+                    self.acespec = choice(["asexual", "demisexual"])
+                    if self.acespec == "asexual":
+                        self.acetype = choice(["repulsed", "tolerant"])
+
+                # aro spec
+                chances_arospec = randint(1, 15)
+                if chances_arospec == 1:
+                    self.arospec = choice(["aromantic", "demiromantic"])
+
+                # who the cat actually likes
+                chances_likespec = randint(1, 15)
+                # skipping if they're aroace
+                if chances_likespec == 1:
+                    if self.acespec == "asexual" and self.acetype == "repulsed" and self.arospec == "aromantic":
+                        self.likespec = None
+                    if self.likespec is not None:
+                        self.likespec = choice(["bi", "omni", "pan", "lesbian", "gay"])
+
+                        # reassigning lesbian and gay if they're the wrong gender
+                        if self.likespec == "lesbian" and self.genderalign not in ("female", "trans female", "demigirl", "genderfae"):
+                            if self.genderalign not in ("male", "trans male", "demiboy", "genderfaun"):
+                                if self.gender is not "female":
+                                    self.likespec = "gay"
+                        if self.likespec == "lesbian" and self.genderalign not in ("male", "trans male", "demiboy", "genderfaun"):
+                            if self.genderalign not in ("female", "trans female", "demigirl", "genderfae"):
+                                if self.gender is not "male":
+                                    self.likespec = "lesbian"
+                        self.likespec = str(self.likespec)
+
+                        # is it romanticity or sexuality?
+                        if self.likespec is not None:
+                            if self.acespec not in ("asexual", "gay", "lesbian"):
+                                self.likespec += "sexual"
+                            elif self.arospec is not ("aromantic", "gay", "lesbian"):
+                                self.likespec += "romantic"
+                            else:
+                                self.likespec = None
+                else: 
+                    self.likespec = "straight"
+            else:
+                self.likespec = "straight"
 
             # APPEARANCE
             self.pelt = Pelt.generate_new_pelt(self.gender, [Cat.fetch_cat(i) for i in (self.parent1, self.parent2) if i], self.age)
@@ -351,6 +421,60 @@ class Cat():
                 
             if not skill_dict:
                 self.skills = CatSkills.generate_new_catskills(self.status, self.moons)
+
+        # setting some identity stuff, works fine if redone every load
+        gendertypes = (
+            "feminine", "masculine", "genderless"
+        )
+        if self.genderalign in ["female", "trans female", "demigirl", "genderfae"]:
+            self.gendertype = "feminine"
+        elif self.genderalign in ["male", "trans male", "demiboy", "genderfaun"]:
+            self.gendertype = "masculine"
+        else:
+            self.gendertype = "genderless"
+            
+        if self.acespec == "asexual" and self.arospec == "aromantic":
+            self.likes = None
+            self.likespec = None
+        elif self.likespec in ["pansexual", "panromantic", "omnisexual", "omniromantic"] and self.likes is None:
+            self.likes = []
+            self.likes.append("feminine", "masculine", "genderless")
+        elif self.likespec in ["bisexual", "biromantic"] and self.likes is None:
+            self.likes = []
+            choice1 = choice(gendertypes)
+            choice2 = choice(gendertypes)
+            if choice1 == choice2:
+                choice1 = choice(gendertypes)
+                if choice1 == choice2:
+                    choice2 = choice(gendertypes)
+                    if choice1 == choice2:
+                        choice1 = "feminine"
+                        choice2 = "masculine"
+            self.likes.append(str(choice1), str(choice2))
+        elif self.likespec == "lesbian" and self.likes is None:
+            self.likes = []
+            self.likes.append("feminine")
+        elif self.likespec == "gay" and self.likes is None:
+            self.likes = []
+            self.likes.append("masculine")
+
+        elif self.likespec == "straight" and self.likes is None:
+            self.likes = []
+            if self.genderalign in ["female", "trans female", "demigirl", "genderfae"]:
+                self.likes.append("masculine")
+            elif self.genderalign in ["male", "trans male", "demiboy", "genderfaun"]:
+                self.likes.append('feminine')
+            else:
+                if self.gender == "female":
+                    self.likes.append("masculine")
+                elif self.gender == "male":
+                    self.likes.append("feminine")
+                else:
+                    print(f"Error with {self.name} (ID {self.ID}), no gender found")
+                    self.likes = None
+        
+
+
         # In camp status
         self.in_camp = 1
         if "biome" in kwargs:
@@ -1278,6 +1402,29 @@ class Cat():
         if self.dead:
             self.thoughts()
             return
+        
+        # genderfluid cats
+        if self.genderalign in ("genderfluid", "genderfae", "genderfaun"):
+            changechance = randint(1,3)
+            if changechance == 1:
+                if self.genderalign == "genderfluid":
+                    if self.gendertype == "masculine":
+                        self.gendertype = choice(["feminine", "genderless"])
+                    elif self.gendertype == "feminine":
+                        self.gendertype = choice(["masculine", "genderless"])
+                    elif self.gendertype == "genderless":
+                        self.gendertype = choice(["feminine", "masculine"])
+                elif self.genderalign == "genderfae":
+                    if self.gendertype == "feminine":
+                        self.gendertype = "genderless"
+                    elif self.gendertype == "genderless":
+                        self.gendertype == "feminine"
+                elif self.genderalign == "genderfaun":
+                    if self.gendertype == "masculine":
+                        self.gendertype = "genderless"
+                    elif self.gendertype == "genderless":
+                        self.gendertype == "masculine"
+                
         
         if old_age != self.age:
             # Things to do if the age changes
@@ -2887,6 +3034,11 @@ class Cat():
                 "specsuffix_hidden": self.name.specsuffix_hidden,
                 "gender": self.gender,
                 "gender_align": self.genderalign,
+                "gendertype": self.gendertype,
+                "acespec": self.acespec if self.acespec else None,
+                "arospec": self.arospec if self.arospec else None,
+                "likespec": self.likespec if self.likespec else "straight",
+                "likes": self.likes if self.likes else None,
                 #"pronouns": self.pronouns,
                 "birth_cooldown": self.birth_cooldown,
                 "status": self.status,

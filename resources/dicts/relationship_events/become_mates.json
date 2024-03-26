@@ -51,5 +51,13 @@
 		"m_c confesses {PRONOUN/m_c/poss} feelings to r_c, asking to be mates. And the answer, well, it's not yes.",
 		"Look, r_c is sorry, but {PRONOUN/r_c/subject} just {VERB/r_c/don't/doesn't} see m_c that way. m_c slinks off, rejected.",
 		"m_c's confession of love to r_c could've gone better. Actually, anything would've been better than the rejection {PRONOUN/m_c/subject} got."
+	],
+	"aro_reject":[
+		"m_c confessed {PRONOUN/m_c/poss} feelings to r_c, but {PRONOUN/m_c/poss) heart sank as r_c guiltily looked down and replied that {PRONOUN/r_c/subject} {VERB/r_c/were/was} aromantic.",
+		"m_c feels so stupid for confessing {PRONOUN/m_c/poss} feelings to r_c - how could {PRONOUN/m_c/subject} not remember that r_c was aromantic?"
+	],
+	"incomp_reject": [
+		"m_c confessed {PRONOUN/m_c/poss} feelings to r_c, but r_c admitted that {PRONOUN/r_c/subject} {VERB/r_c/don't/doesn't} like m_c's gender like that. Oh... okay.",
+		"m_c starts to confess to r_c, but is immediatly shut down with r_c stating that {PRONOUN/r_c/subject} {VERB/r_c/don't/doesn't} like m_c's gender romantically."
 	]
 }

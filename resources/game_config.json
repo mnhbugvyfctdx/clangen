@@ -33,6 +33,15 @@
 				"jealousy": 0,
 				"trust": 0
 			},
+			"make_confession_demi" : {
+				"romantic": 30,
+				"platonic": 30,
+				"dislike": -5,
+				"admiration": 0,
+				"comfortable": 15,
+				"jealousy": 0,
+				"trust": 5
+			},
 			"accept_confession" : {
 				"romantic": 17,
 				"platonic": 15,
@@ -41,6 +50,15 @@
 				"comfortable": 10,
 				"jealousy": 0,
 				"trust": 0
+			},
+			"accept_confession_demi" : {
+				"romantic": 17,
+				"platonic": 30,
+				"dislike": -5,
+				"admiration": 0,
+				"comfortable": 15,
+				"jealousy": 0,
+				"trust": 5
 			}
 		},
 		"mate_condition": {

@@ -655,13 +655,29 @@ class ProfileScreen(Screens):
     def generate_column1(self, the_cat):
         """Generate the left column information"""
         output = ""
+        
         # SEX/GENDER
         if the_cat.genderalign is None or the_cat.genderalign == the_cat.gender:
             output += str(the_cat.gender)
+        elif the_cat.genderalign in ("genderfluid", "genderfae", "genderfaun"):
+            output += f"{the_cat.genderalign} ({the_cat.gendertype})"
         else:
             output += str(the_cat.genderalign)
         # NEWLINE ----------
         output += "\n"
+        
+        # SEXUALITY
+        if the_cat.moons >= 6:
+            if the_cat.acespec is None and the_cat.arospec is None:
+                output += f"{the_cat.likespec}"
+            elif the_cat.acespec is None:
+                output += f"{the_cat.arospec} {the_cat.likespec}"
+            elif the_cat.arospec is None:
+                output += f"{the_cat.acespec} {the_cat.likespec}"
+            elif the_cat.likespec is not None:
+                output += f"{the_cat.arospec} {the_cat.acespec} {the_cat.likespec}"
+            # NEWLINE ----------
+            output += "\n"
 
         # AGE
         if the_cat.age == 'kitten':

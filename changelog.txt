@@ -1,8 +1,10 @@
 <strong>v0.0.2</strong>
-- Toggle for showing years in clan settings
-- New skills and personalities, including the removed ones
 - Leader is more likely to choose a cat they like as the deputy, instead of completely random
+- Toggle for showing years in clan settings
+- Albinism and melanism
 
 <strong>v0.0.1</strong>
 - The leader can choose when kits become apprentices, toggleable in clan settings
+- Improved medicine/mediator apprentice choice system
+- New skills and personalities
 - New patrols

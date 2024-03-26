@@ -62,10 +62,12 @@ class ChooseMateScreen(Screens):
         self.kits_selected_pair = True
         self.single_only = False
         self.have_kits_only = False
+        self.identity_only = False
         
         self.single_only_text = None
         self.have_kits_text = None
         self.with_selected_cat_text = None
+        self.identity_only_text = None
         
         self.potential_page_display = None
         self.offspring_page_display = None
@@ -121,6 +123,12 @@ class ChooseMateScreen(Screens):
                     self.have_kits_only = False
                 else:
                     self.have_kits_only = True
+                self.update_potential_mates_container()
+            elif event.ui_element == self.checkboxes.get("identity_only"):
+                if self.identity_only:
+                    self.identity_only = False
+                else:
+                    self.identity_only = True
                 self.update_potential_mates_container()
             elif event.ui_element == self.checkboxes.get("kits_selected_pair"):
                 if self.kits_selected_pair:
@@ -242,11 +250,14 @@ class ChooseMateScreen(Screens):
                                                                container=self.potential_container)
         
         #Checkboxes and text
-        self.single_only_text = pygame_gui.elements.UITextBox("No mates", scale(pygame.Rect((1035, 22), (209, -1))),
+        self.single_only_text = pygame_gui.elements.UITextBox("No mates", scale(pygame.Rect((1035, 7), (209, -1))),
                                                               object_id="#text_box_26_horizcenter",
                                                               container=self.potential_container)
         
-        self.have_kits_text = pygame_gui.elements.UITextBox("Can have biological kits", scale(pygame.Rect((1035, 150), (209, -1))),
+        self.have_kits_text = pygame_gui.elements.UITextBox("Can have kits", scale(pygame.Rect((1035, 125), (209, -1))),
+                                                              object_id="#text_box_26_horizcenter",
+                                                              container=self.potential_container)
+        self.identity_only_text = pygame_gui.elements.UITextBox("Compatible identities", scale(pygame.Rect((1035, 205), (209, -1))),
                                                               object_id="#text_box_26_horizcenter",
                                                               container=self.potential_container)
         
@@ -482,7 +493,7 @@ class ChooseMateScreen(Screens):
         else:
             theme = "#unchecked_checkbox"
             
-        self.checkboxes["single_only"] = UIImageButton(scale(pygame.Rect((1106, 85),(68, 68))), "",
+        self.checkboxes["single_only"] = UIImageButton(scale(pygame.Rect((1106, 50),(68, 68))), "",
                                                        object_id=theme, container=self.potential_container)
         
         if "have_kits_only" in self.checkboxes:
@@ -493,11 +504,22 @@ class ChooseMateScreen(Screens):
         else:
             theme = "#unchecked_checkbox"
             
-        self.checkboxes["have_kits_only"] = UIImageButton(scale(pygame.Rect((1106, 254),(68, 68))), "",
+        self.checkboxes["have_kits_only"] = UIImageButton(scale(pygame.Rect((1106, 167),(68, 68))), "",
                                                           object_id=theme, container=self.potential_container)
+        if "identity_only" in self.checkboxes:
+            self.checkboxes["identity_only"].kill()
+        
+        if self.identity_only:
+            theme = "#checked_checkbox"
+        else:
+            theme = "#unchecked_checkbox"
+            
+        self.checkboxes["identity_only"] = UIImageButton(scale(pygame.Rect((1106, 280),(68, 68))), "",
+                                                       object_id=theme, container=self.potential_container)
         
         self.all_potential_mates = self.chunks(self.get_valid_mates(),
                                                24)
+        
         
         # Update checkboxes        
         # TODO
@@ -661,6 +683,16 @@ class ChooseMateScreen(Screens):
             scale(pygame.Rect((130, 230), (240, 60))),
             name,
             object_id="#text_box_34_horizcenter")
+        
+        # sexuality str so i don't have even more if statements in the str
+        if self.the_cat.arospec is None and self.the_cat.acespec is None:
+            sexualitystr = f"{self.the_cat.likespec}"
+        elif self.the_cat.acespec is None:
+            sexualitystr = f"{self.the_cat.arospec} {self.the_cat.likespec}"
+        elif self.the_cat.arospec is None:
+            sexualitystr = f"{self.the_cat.acespec} {self.the_cat.likespec}"
+        else:
+            sexualitystr = f"{self.the_cat.arospec} {self.the_cat.acespec} {self.the_cat.likespec}"
 
         # cat's age in years
         years = str(self.the_cat.moons / 12)
@@ -673,22 +705,22 @@ class ChooseMateScreen(Screens):
         if game.clan.clan_settings['showyears']:
             if years == 1:
                 info = str(self.the_cat.moons) + " moons\n  |  " + f"{years} year" + "\n" + \
-                   self.the_cat.status + "\n" + self.the_cat.genderalign + "\n" + \
+                   self.the_cat.status + "\n" + self.the_cat.genderalign + "\n" + sexualitystr + "\n" + \
                    self.the_cat.personality.trait
             else:
                 info = str(self.the_cat.moons) + " moons\n  |  " + f"{years} years" + "\n" + \
-                   self.the_cat.status + "\n" + self.the_cat.genderalign + "\n" + \
+                   self.the_cat.status + "\n" + self.the_cat.genderalign + "\n" + sexualitystr + "\n" + \
                    self.the_cat.personality.trait
         elif game.clan.clan_settings['onlyyears']:
             if years == 1:
                 info = str(years) + " year\n" + self.the_cat.status + "\n" + \
-                    self.the_cat.genderalign + "\n" + self.the_cat.personality.trait
+                    self.the_cat.genderalign + "\n" + sexualitystr + "\n" + self.the_cat.personality.trait
             else:
                 info = str(years) + " years\n" + self.the_cat.status + "\n" + \
-                    self.the_cat.genderalign + "\n" + self.the_cat.personality.trait
+                    self.the_cat.genderalign + "\n" + sexualitystr + "\n" + self.the_cat.personality.trait
         else:
             info = str(self.the_cat.moons) + " moons\n"  + self.the_cat.status + "\n" + \
-                    self.the_cat.genderalign + "\n" + self.the_cat.personality.trait
+                    self.the_cat.genderalign + "\n" + sexualitystr + "\n" + self.the_cat.personality.trait
             
         if self.the_cat.mate:
             info += f"\n{len(self.the_cat.mate)} "
@@ -825,6 +857,16 @@ class ChooseMateScreen(Screens):
             name,
             object_id="#text_box_34_horizcenter")
 
+        # sexuality str so i don't have even more if statements in the str
+        if self.selected_cat.arospec is None and self.selected_cat.acespec is None:
+            sexualitystr = f"{self.selected_cat.likespec}"
+        elif self.selected_cat.acespec is None:
+            sexualitystr = f"{self.selected_cat.arospec} {self.selected_cat.likespec}"
+        elif self.selected_cat.arospec is None:
+            sexualitystr = f"{self.selected_cat.acespec} {self.selected_cat.likespec}"
+        else:
+            sexualitystr = f"{self.selected_cat.arospec} {self.selected_cat.acespec} {self.selected_cat.likespec}"
+
         # cat's age in years
         years = str(self.selected_cat.moons / 12)
         years = years[:4]
@@ -836,22 +878,22 @@ class ChooseMateScreen(Screens):
         if game.clan.clan_settings['showyears']:
             if years == 1:
                 info = str(self.selected_cat.moons) + " moons\n  |  " + f"{years} year" + "\n" + \
-                   self.selected_cat.status + "\n" + self.selected_cat.genderalign + "\n" + \
+                   self.selected_cat.status + "\n" + self.selected_cat.genderalign + "\n" + sexualitystr + "\n" + \
                    self.selected_cat.personality.trait
             else:
                 info = str(self.selected_cat.moons) + " moons\n  |  " + f"{years} years" + "\n" + \
-                   self.selected_cat.status + "\n" + self.selected_cat.genderalign + "\n" + \
+                   self.selected_cat.status + "\n" + self.selected_cat.genderalign + "\n" + sexualitystr + "\n" + \
                    self.selected_cat.personality.trait
         elif game.clan.clan_settings['onlyyears']:
             if years == 1:
                 info = str(years) + " year\n" + self.selected_cat.status + "\n" + \
-                    self.selected_cat.genderalign + "\n" + self.selected_cat.personality.trait
+                    self.selected_cat.genderalign + "\n" + sexualitystr + "\n"  + self.selected_cat.personality.trait
             else:
                 info = str(years) + " years\n" + self.selected_cat.status + "\n" + \
-                    self.selected_cat.genderalign + "\n" + self.selected_cat.personality.trait
+                    self.selected_cat.genderalign + "\n" + sexualitystr + "\n" + self.selected_cat.personality.trait
         else:
             info = str(self.selected_cat.moons) + " moons\n"  + self.selected_cat.status + "\n" + \
-                    self.selected_cat.genderalign + "\n" + self.selected_cat.personality.trait
+                    self.selected_cat.genderalign + "\n" +  sexualitystr + "\n" + self.selected_cat.personality.trait
             
         if self.selected_cat.mate:
             info += f"\n{len(self.selected_cat.mate)} "
@@ -872,6 +914,13 @@ class ChooseMateScreen(Screens):
                 f"<font pixel_size={int(22 / 1400 * screen_y)}> This pair can't have biological kittens </font>", 
                 scale(pygame.Rect((550, 250), (498, 50))),
                 object_id=get_text_box_theme("#text_box_22_horizcenter_vertcenter_spacing_95"))
+        
+        if game.settings["allow breakup"] and self.the_cat.gendertype not in self.selected_cat.likes or self.selected_cat.gendertype not in self.the_cat.likes:
+            self.selected_cat_elements["breakup warning"] = pygame_gui.elements.UITextBox(
+                f"<font pixel_size={int(22 / 1400 * screen_y)}> This pair will break up due to sexuality </font>", 
+                scale(pygame.Rect((550, 280), (498, 50))),
+                object_id=get_text_box_theme("#text_box_22_horizcenter_vertcenter_spacing_95"))
+        
         
         
         if self.kits_selected_pair:
@@ -1023,7 +1072,7 @@ class ChooseMateScreen(Screens):
                        and (not self.single_only or not i.mate)
                        and (not self.have_kits_only 
                             or game.clan.clan_settings["same sex birth"]
-                            or i.gender != self.the_cat.gender)]
+                            or i.gender != self.the_cat.gender) and (not self.identity_only or (i.gendertype in self.the_cat.likes and self.the_cat.gendertype in i.likes))]
         
         return valid_mates
 
