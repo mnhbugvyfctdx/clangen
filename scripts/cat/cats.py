@@ -359,20 +359,22 @@ class Cat():
                         # reassigning lesbian and gay if they're the wrong gender
                         if self.likespec == "lesbian" and self.genderalign not in ("female", "trans female", "demigirl", "genderfae"):
                             if self.genderalign not in ("male", "trans male", "demiboy", "genderfaun"):
-                                if self.gender is not "female":
+                                if self.gender != "female":
                                     self.likespec = "gay"
                         if self.likespec == "lesbian" and self.genderalign not in ("male", "trans male", "demiboy", "genderfaun"):
                             if self.genderalign not in ("female", "trans female", "demigirl", "genderfae"):
-                                if self.gender is not "male":
+                                if self.gender != "male":
                                     self.likespec = "lesbian"
                         self.likespec = str(self.likespec)
 
                         # is it romanticity or sexuality?
                         if self.likespec is not None:
-                            if self.acespec not in ("asexual", "gay", "lesbian"):
-                                self.likespec += "sexual"
-                            elif self.arospec is not ("aromantic", "gay", "lesbian"):
-                                self.likespec += "romantic"
+                            if self.acespec != "asexual":
+                                if self.likespec not in ("gay", "lesbian"):
+                                    self.likespec += "sexual"
+                            elif self.arospec != "aromantic":
+                                if self.likespec not in ("gay", "lesbian"):
+                                    self.likespec += "romantic"
                             else:
                                 self.likespec = None
                 else: 
@@ -438,7 +440,9 @@ class Cat():
             self.likespec = None
         elif self.likespec in ["pansexual", "panromantic", "omnisexual", "omniromantic"] and self.likes is None:
             self.likes = []
-            self.likes.append("feminine", "masculine", "genderless")
+            self.likes.append("masculine")
+            self.likes.append("genderless")
+            self.likes.append("feminine")
         elif self.likespec in ["bisexual", "biromantic"] and self.likes is None:
             self.likes = []
             choice1 = choice(gendertypes)
@@ -450,7 +454,8 @@ class Cat():
                     if choice1 == choice2:
                         choice1 = "feminine"
                         choice2 = "masculine"
-            self.likes.append(str(choice1), str(choice2))
+            self.likes.append(str(choice1))
+            self.likes.append(str(choice2))
         elif self.likespec == "lesbian" and self.likes is None:
             self.likes = []
             self.likes.append("feminine")
