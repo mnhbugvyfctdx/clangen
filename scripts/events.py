@@ -2182,12 +2182,12 @@ class Events:
 
             involved_cats = [cat.ID]
             if cat.age == 'adolescent':
-                transing_chance = random.getrandbits(7)
+                transing_chance = random.getrandbits(6)
             elif cat.age == 'young adult':
-                transing_chance = random.getrandbits(8)
+                transing_chance = random.getrandbits(7)
             else:
                 # adult, senior adult, elder
-                transing_chance = random.getrandbits(9) 
+                transing_chance = random.getrandbits(8) 
 
             if transing_chance:
                 # transing_chance != 0, no trans kitties today...    L
@@ -2238,12 +2238,12 @@ class Events:
 
             involved_cats = [cat.ID]
             if cat.age == 'adolescent':
-                orient_chance = random.getrandbits(6)
+                orient_chance = random.getrandbits(5)
             elif cat.age == 'young adult':
-                orient_chance = random.getrandbits(7) 
+                orient_chance = random.getrandbits(6) 
             else:
                 # adult, senior adult, elder
-                orient_chance = random.getrandbits(8)  
+                orient_chance = random.getrandbits(7)  
 
             if orient_chance:
                 return
@@ -2545,6 +2545,7 @@ class Events:
                                 "There are no cats fit to become deputy. ",
                                 "ceremony"))
                 random_cat.status = "deputy"
+                game.clan.deputy.ID = random_cat.ID
 
                 game.cur_events_list.append(
                     Single_Event(text, "ceremony"))

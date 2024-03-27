@@ -712,13 +712,25 @@ class MakeClanScreen(Screens):
         # SELECTED CAT INFO
         if selected is not None:
             if self.selected_cat.arospec is None and selected.acespec is None:
-                sexualitystr = f"{selected.likespec}"
+                if selected.likespec is not None:
+                    sexualitystr = f"{selected.likespec}"
+                else:
+                    sexualitystr = ""
             elif self.selected_cat.acespec is None:
-                sexualitystr = f"{selected.arospec} {selected.likespec}"
+                if selected.likespec is not None:
+                    sexualitystr = f"{selected.arospec} {selected.likespec}"
+                else:
+                    sexualitystr = f"{selected.arospec}"
             elif self.selected_cat.arospec is None:
-                sexualitystr = f"{selected.acespec} {selected.likespec}"
+                if selected.likespec is not None:
+                    sexualitystr = f"{selected.acespec} {selected.likespec}"
+                else:
+                    sexualitystr = f"{selected.acespec}"
             else:
-                sexualitystr = f"{selected.arospec} {selected.acespec} {selected.likespec}"
+                if selected.likespec is not None:
+                    sexualitystr = f"{selected.arospec} {selected.acespec} {selected.likespec}"
+                else:
+                    sexualitystr = f"{selected.arospec} {selected.acespec}"
 
             if self.sub_screen == 'choose leader':
                 self.elements['cat_name'].set_text(str(selected.name) +

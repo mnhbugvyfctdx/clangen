@@ -336,19 +336,19 @@ class Cat():
             # sexuality
             if game.settings["allow orient"] and self.status not in ("kitten", "newborn"):
                 # ace spec
-                chances_acespec = randint(1, 15)
+                chances_acespec = randint(1, 10)
                 if chances_acespec == 1:
                     self.acespec = choice(["asexual", "demisexual"])
                     if self.acespec == "asexual":
                         self.acetype = choice(["repulsed", "tolerant"])
 
                 # aro spec
-                chances_arospec = randint(1, 15)
+                chances_arospec = randint(1, 10)
                 if chances_arospec == 1:
                     self.arospec = choice(["aromantic", "demiromantic"])
 
                 # who the cat actually likes
-                chances_likespec = randint(1, 15)
+                chances_likespec = randint(1, 5)
                 # skipping if they're aroace
                 if chances_likespec == 1:
                     if self.acespec == "asexual" and self.acetype == "repulsed" and self.arospec == "aromantic":
@@ -361,7 +361,7 @@ class Cat():
                             if self.genderalign not in ("male", "trans male", "demiboy", "genderfaun"):
                                 if self.gender != "female":
                                     self.likespec = "gay"
-                        if self.likespec == "lesbian" and self.genderalign not in ("male", "trans male", "demiboy", "genderfaun"):
+                        if self.likespec == "gay" and self.genderalign not in ("male", "trans male", "demiboy", "genderfaun"):
                             if self.genderalign not in ("female", "trans female", "demigirl", "genderfae"):
                                 if self.gender != "male":
                                     self.likespec = "lesbian"
@@ -381,6 +381,23 @@ class Cat():
                     self.likespec = "straight"
             else:
                 self.likespec = "straight"
+
+            if self.genderalign in ("genderfaun", "male", "trans male", "demiboy"):
+                self.gendertype = "masculine"
+            elif self.genderalign in ("genderfae", "female", "trans female", "demigirl"):
+                self.gendertype = "feminine"
+            else: 
+                self.gendertype = "genderless"
+
+            if self.gendertype == "masculine" and (self.likespec and self.likespec == "lesbian"):
+                self.likespec = "gay"
+            elif self.gendertype == "feminine" and (self.likespec and self.likespec == "gay"):
+                self.likespec = "lesbian"
+            elif self.gendertype == "genderless" and (self.likespec == "gay" or self.likespec == "lesbian"):
+                if self.gender == "male":
+                    self.likespec = "gay"
+                elif self.gender == "female":
+                    self.likespec = "lesbian"
 
             # APPEARANCE
             self.pelt = Pelt.generate_new_pelt(self.gender, [Cat.fetch_cat(i) for i in (self.parent1, self.parent2) if i], self.age)
