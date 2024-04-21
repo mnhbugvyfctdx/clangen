@@ -133,7 +133,6 @@ class Sprites():
         self.make_group('lineartdead', (0, 0), 'lineartdead')
         self.make_group('lineartdf', (0, 0), 'lineartdf')
         
-        
         self.make_group('albinistic', (0, 0), 'albinistic')
         self.make_group('melanistic', (0, 0), 'melanistic')
 
@@ -288,7 +287,6 @@ class Sprites():
             self.make_group('maskedcolours', (a, 1), f'masked{i}')
         for a, i in enumerate(['LIGHTBROWN', 'LILAC', 'BROWN', 'GOLDEN-BROWN', 'DARKBROWN', 'CHOCOLATE']):
             self.make_group('maskedcolours', (a, 2), f'masked{i}')
-
             
         # new new torties
         for a, i in enumerate(['ONE', 'TWO', 'THREE', 'FOUR', 'REDTAIL', 'DELILAH', 'HALF', 'STREAK', 'MASK', 'SMOKE']):

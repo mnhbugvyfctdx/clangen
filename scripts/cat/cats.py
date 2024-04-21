@@ -184,6 +184,7 @@ class Cat():
         self.skills = CatSkills(skill_dict=skill_dict)
         self.personality = Personality(trait="troublesome", lawful=0, aggress=0,
                                        stable=0, social=0)
+        self._secondarypersonality = SecondaryPersonality(lawful=self.personality.lawfulness,stable=self.personality.stability,aggress=self.personality.aggression,social=self.personality.sociability) # Hidden trait that mainly deals with morals. Must be here so personality facets can be called on
         self.parent1 = parent1
         self.parent2 = parent2
         self.adoptive_parents = []
@@ -795,8 +796,7 @@ class Cat():
                 if cat.ID not in Cat.grief_strings:
                     Cat.grief_strings[cat.ID] = []
                 
-                Cat.grief_strings[cat.ID].append((text, (self.ID, cat.ID), "negative"))
-                
+                Cat.grief_strings[cat.ID].append((text, (self.ID, cat.ID), "negative"))             
 
     def familial_grief(self, living_cat: Cat):
         """
@@ -917,7 +917,7 @@ class Cat():
         if game.sort_type == "rank" and resort:
             Cat.sort_cats()
 
-    
+
     def rank_change_traits_skill(self, mentor):
         """Updates trait and skill upon ceremony"""  
 
@@ -947,7 +947,6 @@ class Cat():
         
         self.personality.set_kit(self.is_baby()) #Update kit trait stuff
         
-
     def describe_cat(self, short=False):
         """ Generates a string describing the cat's appearance and gender. Mainly used for generating
         the allegiances. If short is true, it will generate a very short one, with the minimal amount of information. """
@@ -1092,7 +1091,6 @@ class Cat():
             )
 
             print(f"WARNING: saving history of cat #{self.ID} didn't work")
-            
 
     def generate_lead_ceremony(self):
         """
@@ -1407,8 +1405,6 @@ class Cat():
 
     def one_moon(self):
         """Handles a moon skip for an alive cat. """
-        
-        
         old_age = self.age
         self.moons += 1
         if self.moons == 1 and self.status == "newborn":
@@ -1446,8 +1442,7 @@ class Cat():
                         self.gendertype = "genderless"
                     elif self.gendertype == "genderless":
                         self.gendertype == "masculine"
-                
-        
+
         if old_age != self.age:
             # Things to do if the age changes
             self.personality.facet_wobble(max=2)
@@ -1528,10 +1523,6 @@ class Cat():
 
     def relationship_interaction(self):
         """Randomly choose a cat of the Clan and have a interaction with them."""
-        # if the cat has no relationships, skip
-        #if not self.relationships or len(self.relationships) < 1:
-        #    return
-
         cats_to_choose = [iter_cat for iter_cat in Cat.all_cats.values() if iter_cat.ID != self.ID and \
                           not iter_cat.outside and not iter_cat.exiled and not iter_cat.dead]
         # if there are not cats to interact, stop
@@ -1588,7 +1579,17 @@ class Cat():
 
         moons_with = game.clan.age - self.illnesses[illness]["moon_start"]
 
+        # focus buff
+        moons_prior = game.config["focus"]["rest and recover"]["moons_earlier_healed"]
+
         if self.illnesses[illness]["duration"] - moons_with <= 0:
+            self.healed_condition = True
+            return False
+
+        # CLAN FOCUS! - if the focus 'rest and recover' is selected
+        elif game.clan.clan_settings.get("rest and recover") and\
+            self.illnesses[illness]["duration"] + moons_prior - moons_with <= 0:
+            # print(f"rest and recover - illness {illness} of {self.name} healed earlier")
             self.healed_condition = True
             return False
 
@@ -1617,8 +1618,19 @@ class Cat():
 
         moons_with = game.clan.age - self.injuries[injury]["moon_start"]
 
+        # focus buff
+        moons_prior = game.config["focus"]["rest and recover"]["moons_earlier_healed"]
+
         # if the cat has an infected wound, the wound shouldn't heal till the illness is cured
         if not self.injuries[injury]["complication"] and self.injuries[injury]["duration"] - moons_with <= 0:
+            self.healed_condition = True
+            return False
+
+        # CLAN FOCUS! - if the focus 'rest and recover' is selected
+        elif not self.injuries[injury]["complication"] and \
+            game.clan.clan_settings.get("rest and recover") and\
+            self.injuries[injury]["duration"] + moons_prior - moons_with <= 0:
+            # print(f"rest and recover - injury {injury} of {self.name} healed earlier")
             self.healed_condition = True
             return False
 
@@ -3368,6 +3380,36 @@ class Personality():
         else:
             #This will only trigger if they have the same personality. 
             return None
+        
+class SecondaryPersonality():
+    """a"""
+
+    def __init__(self, lawful:int=None, stable:int=None, aggress:int=None, 
+                 social:int=None) -> SecondaryPersonality:
+        lawful = (lawful - 7) * 2 # if below average, will turn negative. then *'d by 2 to increase effect, and get rid of .5s
+        stable = (stable - 7) * 2
+        aggress = (aggress - 7) * 2
+        social = (social - 7) * 2
+
+        cruel_chance = int(game.config["personality"]["cruel_chance"]) - (lawful*2) - (stable*2) + (aggress*2) - (social*2)
+        mean_chance = int(game.config["personality"]["mean_chance"]) - lawful - stable + aggress - social + cruel_chance
+        neutral_chance = int(game.config["personality"]["neutral_chance"]) + mean_chance
+        kind_chance = int(game.config["personality"]["kind_chance"]) + lawful + stable - aggress + social + neutral_chance
+        gracious_chance = int(game.config["personality"]["gracious_chance"]) + (lawful*2) + (stable*2) - (aggress*2) + (social*2) + kind_chance
+
+        maxchance = cruel_chance + mean_chance + neutral_chance + kind_chance + gracious_chance
+
+        chance = randint(0, maxchance)
+        if chance <= cruel_chance:
+            self.trait = "cruel"
+        elif chance <= mean_chance:
+            self.trait = "mean"
+        elif chance <= neutral_chance:
+            self.trait = "neutral"
+        elif chance <= kind_chance:
+            self.trait = "kind"
+        else:
+            self.trait = "gracious"
 
 # Twelve example cats
 def create_example_cats():

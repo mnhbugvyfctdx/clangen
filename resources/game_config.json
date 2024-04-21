@@ -18,6 +18,13 @@
 			"chance_romantic_not_mate - the base chance of an romantic interaction with another cat, when a cat has a mate"
 		]
 	},
+	"personality":{
+		"cruel_chance": 5,
+		"gracious_chance": 5,
+		"kind_chance": 20,
+		"mean_chance": 20,
+		"neutral_chance": 50
+	},
 	"mates":{
 		"age_range": 40,
 		"override_same_age_group": false,
